@@ -30,6 +30,7 @@ dependencies:
   #state managment
   flutter_riverpod: ^2.3.4
   riverpod: ^2.3.4
+  firebase_storage: ^11.1.0
 
 dev_dependencies:
   flutter_test:
