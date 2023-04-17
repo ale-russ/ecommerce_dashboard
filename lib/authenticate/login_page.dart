@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/authenticate/registration.dart';
 import 'package:ecommerce_dashboard/dashboard_page.dart';
@@ -8,67 +10,89 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../constants/constants.dart';
+
 final TextEditingController emailController = TextEditingController();
 final TextEditingController passwordController = TextEditingController();
 final FirebaseAuth auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
-class LoginPage extends ConsumerWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  bool isObscured = true;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(22, 16, 75, 0.6),
+      backgroundColor: const Color.fromRGBO(22, 16, 75, 0.6),
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(22, 16, 75, 0.9),
-        title: Text('Login'),
+        // backgroundColor: const Color.fromRGBO(22, 16, 75, 0.9),
+        backgroundColor: secondaryColor,
+        title: const Text('Login'),
       ),
-      body: Padding(
+      body: Container(
+        color: bgColor,
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            KpTextField(
-              controller: emailController,
-              hint: 'email',
-            ),
-            const SizedBox(height: 16),
-            KpTextField(
+            EmailPasswordFields(hint: 'email', controller: emailController),
+            EmailPasswordFields(
               controller: passwordController,
+              obscureText: isObscured,
               hint: 'password',
+              icon: IconButton(
+                icon: Icon(
+                  !isObscured
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isObscured = !isObscured;
+                  });
+                  log('isObscured: $isObscured');
+                },
+              ),
             ),
-            const SizedBox(height: 16),
-            SizedBox(
+            Container(
+              margin: const EdgeInsets.only(top: 16),
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   _siginbutton(context);
                 },
-                child: Text('Sign In'),
+                child: const Text('Sign In'),
               ),
             ),
-            const SizedBox(height: 16),
-            SizedBox(
+            Container(
+              margin: const EdgeInsets.only(top: 16),
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RegistrationPage()));
+                          builder: (context) => const RegistrationPage()));
                 },
-                child: Text(
-                  'create new account',
-                  style: TextStyle(color: Colors.amber),
+                child: const Text(
+                  'Create new account',
                 ),
               ),
             ),
-            SizedBox(height: 16),
             Container(
+              margin: const EdgeInsets.only(top: 16),
               width: 50,
               height: 50,
-              decoration: const BoxDecoration(color: Colors.white),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(50)),
               child: IconButton(
                 onPressed: () {
                   _googlesiginbutton(context);
@@ -86,26 +110,68 @@ class LoginPage extends ConsumerWidget {
   }
 }
 
+// ignore: must_be_immutable
+class EmailPasswordFields extends StatelessWidget {
+  EmailPasswordFields({
+    super.key,
+    this.icon,
+    this.obscureText = false,
+    required this.hint,
+    required this.controller,
+  });
+
+  Widget? icon;
+  bool obscureText;
+  String hint;
+
+  TextEditingController? controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: KpTextField(
+        controller: controller,
+        hint: hint,
+        maxlines: 1,
+        obscureText: obscureText,
+        suffixWidget: icon,
+      ),
+    );
+  }
+}
+
 Future<void> _siginbutton(BuildContext context) async {
+  var navigator = Navigator.of(context);
+  showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Colors.amber,
+          ),
+        );
+      });
   try {
     UserCredential userCredential = await auth.signInWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
     );
     User user = userCredential.user!;
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DashboardPage()));
-    print('Signed in user: ${user.email}');
+    navigator.pop();
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      log('No user found for that email.');
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      log('Wrong password provided for that user.');
     }
+    log('error: ${e.toString()}');
   }
 }
 
 Future<void> _googlesiginbutton(BuildContext context) async {
+  var navigator = Navigator.of(context);
   try {
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -119,11 +185,12 @@ Future<void> _googlesiginbutton(BuildContext context) async {
     final User user = userCredential.user!;
     // Save the user's information to Firestore
     await _saveUserToFirestore(userCredential.user!);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DashboardPage()));
-    print('Signed in user: ${user.displayName}');
+    navigator.push(MaterialPageRoute(
+      builder: (context) => const DashboardPage(),
+    ));
+    log('Signed in user: ${user.displayName}');
   } catch (e) {
-    print('Error occurred while signing in with Google: $e');
+    log('Error occurred while signing in with Google: $e');
   }
 }
 
