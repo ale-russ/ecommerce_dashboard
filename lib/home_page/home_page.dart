@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../authenticate/controller/login_controller.dart';
 import '../constants/constants.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   HomePage({Key? key}) : super(key: key);
 
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
@@ -48,7 +50,7 @@ class HomePage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: TextButton(
                 onPressed: () async {
-                  FirebaseAuth.instance.signOut();
+                  ref.read(loginControllerProvider.notifier).signOut();
                 },
                 child: const Text('Logout')),
           )

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'authenticate/auth_page.dart';
-import 'authenticate/login_page.dart';
+import 'authenticate/screens/auth_page.dart';
+import 'authenticate/screens/login_page.dart';
 import 'constants/constants.dart';
 import 'firebase_options.dart';
 
