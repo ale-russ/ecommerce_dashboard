@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_dashboard/authenticate/registration.dart';
+import 'package:ecommerce_dashboard/authenticate/screens/registration.dart';
 import 'package:ecommerce_dashboard/dashboard_page.dart';
 import 'package:ecommerce_dashboard/home_page/home_page.dart';
 import 'package:ecommerce_dashboard/widget/textfield.dart';
@@ -81,7 +81,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()));
+                          builder: (context) => RegistrationPage()));
                 },
                 child: const Text(
                   'Create new account',

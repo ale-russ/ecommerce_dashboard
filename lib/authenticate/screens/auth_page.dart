@@ -14,7 +14,7 @@ class AuthPage extends ConsumerWidget {
     final authstateAsync = ref.watch(authStateProvider);
     return Scaffold(
       body: authstateAsync.when(
-        data: (user) => user != null ? HomePage() : LoginPage(),
+        data: (user) => user != null ? Homepage() : LoginPage(),
         error: (err, stack) => AlertDialog(
           content: Text(err.toString()),
         ),
