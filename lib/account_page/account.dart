@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/account_page/account_ctrl.dart';
 import 'package:ecommerce_dashboard/constants/constants.dart';
@@ -7,14 +9,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AccountPage extends StatefulWidget {
+import '../authenticate/controller/login_controller.dart';
+
+class AccountPage extends ConsumerStatefulWidget {
   const AccountPage({super.key});
 
   @override
-  State<AccountPage> createState() => _AccountPageState();
+  ConsumerState<AccountPage> createState() => _AccountPageState();
 }
 
-class _AccountPageState extends State<AccountPage> {
+class _AccountPageState extends ConsumerState<AccountPage> {
   final users = FirebaseAuth.instance.currentUser!;
 
   String photoUrl = 'https://pbs.twimg.com/media/Enh165pXIAAgtE1.jpg';
@@ -53,33 +57,35 @@ class _AccountPageState extends State<AccountPage> {
                               fontSize: 18, color: Colors.white),
                         ),
                         const SizedBox(height: defaultPadding * 2),
+                        KpTextField(readonly: true, maxlines: 1, hint: email
+                            // hint: data['email'] ?? 'the competition description ',
+                            ),
+                        const SizedBox(height: defaultPadding),
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          hint: data['email'] ?? 'the competition description ',
+                          hint: users.displayName,
+                          // hint: data['firstName'] ??
+                          //     'the competition description ',
                         ),
                         const SizedBox(height: defaultPadding),
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          hint: data['firstName'] ??
-                              'the competition description ',
-                        ),
-                        const SizedBox(height: defaultPadding),
-                        KpTextField(
-                          readonly: true,
-                          maxlines: 1,
-                          hint: data['lastName'] ??
-                              'the competition description ',
+                          hint: users.displayName,
+                          // hint: data['lastName'] ??
+                          //     'the competition description ',
                         ),
                         const SizedBox(height: defaultPadding * 2),
                         SizedBox(
                           width: 300,
                           child: ElevatedButton(
                               onPressed: () {
-                                FirebaseAuth.instance.signOut();
+                                ref
+                                    .read(loginControllerProvider.notifier)
+                                    .signOut();
                               },
-                              child: Text('Sign out')),
+                              child: const Text('Sign out')),
                         ),
                       ],
                     ),
