@@ -72,14 +72,13 @@ class RegistrationPage extends ConsumerWidget {
                   onPressed: () async {
                     var isValid = _formKey.currentState?.validate() ?? false;
                     if (isValid) {
-                      await ref
-                          .read(loginControllerProvider.notifier)
-                          .signUp(emailController.text, passwordController.text)
-                          .then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              )));
+                      await ref.read(loginControllerProvider.notifier).signUp(
+                          emailController.text, passwordController.text);
+                      // .then((value) => Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => HomePage(),
+                      //     )));
                     }
                   },
                   child: const Text('Create new'),

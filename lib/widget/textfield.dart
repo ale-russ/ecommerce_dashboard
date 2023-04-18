@@ -1,3 +1,4 @@
+import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class KpTextField extends StatelessWidget {
@@ -6,9 +7,11 @@ class KpTextField extends StatelessWidget {
       this.autoValidate = AutovalidateMode.onUserInteraction,
       this.label,
       this.hint,
+      this.value,
       this.controller,
       this.validator,
       this.obscureText = false,
+      this.readonly = false,
       this.suffixWidget,
       this.maxlines,
       TextStyle? labelStyle,
@@ -21,11 +24,15 @@ class KpTextField extends StatelessWidget {
   final Widget? suffixWidget;
   final String? label;
   final String? hint;
+  final String? value;
   final int? maxlines;
   final bool obscureText;
+  final bool readonly;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readonly,
+      initialValue: value,
       maxLines: maxlines,
       obscureText: obscureText,
       cursorColor: const Color(0xFFFFA500),
@@ -34,7 +41,7 @@ class KpTextField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
           focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFFFFA500), width: 1.5)),
+              borderSide: BorderSide(color: secondaryColor)),
           filled: true,
           // fillColor: Theme.of(context).colorScheme.onSecondary,
           fillColor: const Color.fromRGBO(255, 255, 255, 0.1),
