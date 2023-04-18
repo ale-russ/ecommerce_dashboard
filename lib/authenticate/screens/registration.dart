@@ -91,33 +91,4 @@ class RegistrationPage extends ConsumerWidget {
       ),
     );
   }
-
-  Future<void> createUserbutton(
-      BuildContext context, String email, String password) async {
-    var navigator = Navigator.of(context);
-    try {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.amber,
-              ),
-            );
-          });
-      // await auth.createUserWithEmailAndPassword(
-      //     email: email, password: password);
-      navigator.pop();
-    } on FirebaseAuthException catch (e) {
-      displayFirebaseError(e, context);
-    } catch (e) {
-      // Handle other errors.
-      // displayFirebaseError(e, context)
-    }
-  }
-
-  void displayFirebaseError(FirebaseAuthException e, BuildContext context) {
-    var snackBar = SnackBar(content: Text('Error: ${e.toString()}'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 }
