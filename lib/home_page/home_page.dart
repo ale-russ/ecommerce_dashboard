@@ -1,13 +1,12 @@
 import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../account_page/account.dart';
-import '../dashboard/dashboard.dart';
-import '../orders_page/orders.dart';
-import '../product_page/product.dart';
+import '../account_page/account_page.dart';
+import '../dashboard/dashboard_page.dart';
+import '../orders_page/orders_page.dart';
+import '../product_page/product_page.dart';
 
 class Homepage extends StatefulHookConsumerWidget {
   Homepage({
@@ -68,7 +67,7 @@ class HomepageState extends ConsumerState<Homepage> {
   Widget _getBodyWidget() {
     switch (_selectedIndex) {
       case 0:
-        return Dashboardpage();
+        return const Dashboardpage();
       case 1:
         return const Orderpage();
       case 2:

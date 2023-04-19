@@ -68,7 +68,8 @@ class desctext extends StatelessWidget {
       padding: const EdgeInsets.all(4.0),
       child: Align(
           alignment: Alignment.centerLeft,
-          child: Text(name, style: TextStyle(fontSize: 16))),
+          child:
+              Text(name, style: TextStyle(fontSize: 16, color: Colors.white))),
     );
   }
 }

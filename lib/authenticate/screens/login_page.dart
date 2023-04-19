@@ -1,19 +1,11 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/authenticate/providers/isObuscre_provider.dart';
 import 'package:ecommerce_dashboard/authenticate/screens/registration.dart';
-import 'package:ecommerce_dashboard/dashboard_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../constants/constants.dart';
-import '../../constants/load_status.dart';
 import '../controller/login_controller.dart';
 import '../widgets/email_password_field.dart';
 
