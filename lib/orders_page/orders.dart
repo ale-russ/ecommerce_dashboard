@@ -24,80 +24,81 @@ class _OrderpageState extends ConsumerState<Orderpage> {
   Widget build(BuildContext context) {
     final orders = ref.watch(ordersprovider);
 
-    return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: secondaryColor,
-            title: Text('orders'),
-            actions: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    '${users.email}',
-                    style: const TextStyle(fontSize: 12),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: secondaryColor,
+        title: Text('orders'),
+        actions: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                '${users.email}',
+                style: const TextStyle(fontSize: 12),
+              ),
+            ),
+          )
+        ],
+      ),
+      body: orders.when(
+        data: (data) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: PageView.builder(
+              itemCount: data.length,
+              itemBuilder: (BuildContext context, int index) {
+                var container = Container(
+                  height: 250,
+                  // constraints: BoxConstraints(minHeight: 250),
+                  child: ListView.separated(
+                    itemCount: data.length,
+                    itemBuilder: (constext, index) {
+                      return Tableorders(
+                        cell1: data[index].orderId,
+                        cell2: data[index].orderDate,
+                        cell3: data[index].status,
+                        cell4: data[index].totalPrice,
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
                   ),
-                ),
-              )
-            ],
-          ),
-          body: orders.when(
-            data: (data) {
-              return PageView.builder(
-                itemCount: data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var container = Container(
-                    height: 250,
-                    // constraints: BoxConstraints(minHeight: 250),
-                    child: ListView.separated(
-                      itemCount: data.length,
-                      itemBuilder: (constext, index) {
-                        return Tableorders(
-                          cell1: data[index].orderId,
-                          cell2: data[index].orderDate,
-                          cell3: data[index].status,
-                          cell4: data[index].totalPrice,
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10),
+                );
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: defaultPadding * 2,
                     ),
-                  );
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: defaultPadding * 2,
-                      ),
-                      const Tableorders(
-                        cell1: 'orderId',
-                        cell2: 'orderDate',
-                        cell3: 'status',
-                        cell4: 'price',
-                      ),
-                      const SizedBox(height: defaultPadding),
+                    const Tableorders(
+                      cell1: 'orderId',
+                      cell2: 'orderDate',
+                      cell3: 'status',
+                      cell4: 'price',
+                    ),
+                    const SizedBox(height: defaultPadding),
 
-                      container
-                      // for (var ord in data)
-                      //   Tableorders(
-                      //     cell1: ord.orderId,
-                      //     cell2: ord.orderDate,
-                      //     cell3: ord.status,
-                      //     cell4: ord.totalPrice,
-                      //   ),
-                    ],
-                  );
-                },
-              );
-            },
-            error: (Object error, StackTrace stackTrace) {
-              return adminErrorWidget(message: error.toString());
-            },
-            loading: () {
-              return const LoadingWidget();
-            },
-          ),
-        ));
+                    container
+                    // for (var ord in data)
+                    //   Tableorders(
+                    //     cell1: ord.orderId,
+                    //     cell2: ord.orderDate,
+                    //     cell3: ord.status,
+                    //     cell4: ord.totalPrice,
+                    //   ),
+                  ],
+                );
+              },
+            ),
+          );
+        },
+        error: (Object error, StackTrace stackTrace) {
+          return adminErrorWidget(message: error.toString());
+        },
+        loading: () {
+          return const LoadingWidget();
+        },
+      ),
+    );
   }
 }

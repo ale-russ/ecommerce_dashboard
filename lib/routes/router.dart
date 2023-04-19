@@ -40,7 +40,7 @@ class AppRoutes {
             GoRoute(
                 path: '/products',
                 builder: (context, state) {
-                  return const Productpage();
+                  return Productpage();
                 }),
             GoRoute(
               path: 'profile',

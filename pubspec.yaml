@@ -36,6 +36,8 @@ dependencies:
   google_fonts: ^4.0.3
   email_validator: ^2.1.17
   hooks_riverpod: ^2.3.4
+  image_picker: ^0.8.7+3
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
