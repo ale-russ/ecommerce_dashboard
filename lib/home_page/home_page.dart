@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../account_page/account.dart';
 import '../dashboard/dashboard.dart';
 import '../orders_page/orders.dart';
-import '../product_page/product.dart';
+import '../product_page/screens/product.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({

@@ -27,7 +27,7 @@ class _OrderpageState extends ConsumerState<Orderpage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: secondaryColor,
-        title: Text('orders'),
+        title: const Text('Orders'),
         actions: [
           Center(
             child: Padding(

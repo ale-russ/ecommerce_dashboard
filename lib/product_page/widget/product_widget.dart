@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/constants.dart';
 import '../../models/product.dart';
 import '../../widget/image_widget.dart';
-import '../add_product.dart';
+import 'add_product.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({

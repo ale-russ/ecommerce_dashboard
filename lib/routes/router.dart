@@ -6,7 +6,7 @@ import '../authenticate/auth_page.dart';
 import '../dashboard/dashboard.dart';
 import '../home_page/home_page.dart';
 import '../orders_page/orders.dart';
-import '../product_page/product.dart';
+import '../product_page/screens/product.dart';
 
 class AppRoutes {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
