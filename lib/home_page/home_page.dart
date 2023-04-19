@@ -71,7 +71,7 @@ class HomepageState extends ConsumerState<HomePage> {
       case 1:
         return const Orderpage();
       case 2:
-        return Productpage();
+        return ProductPage();
       case 3:
         return const AccountPage();
       default:

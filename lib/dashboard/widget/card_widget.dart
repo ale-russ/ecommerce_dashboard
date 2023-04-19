@@ -5,8 +5,8 @@ import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import '../../constants/constants.dart';
 import '../../product_page/widget/product_widget.dart';
 
-class dashboardwidget extends StatelessWidget {
-  const dashboardwidget(
+class Dashboardwidget extends StatelessWidget {
+  const Dashboardwidget(
       {super.key,
       this.count,
       required this.title,
@@ -62,7 +62,7 @@ class dashboardwidget extends StatelessWidget {
               ),
               const SizedBox(height: sPadding),
               Expanded(
-                child: desctext(
+                child: DescText(
                   name: title,
                 ),
               ),

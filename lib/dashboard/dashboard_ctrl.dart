@@ -6,7 +6,7 @@ class Dashboardcontrollers {
   Dashboardcontrollers({required this.ref});
   final Ref ref;
 
-  Stream<List<orders>> watchorderlist() {
+  Stream<List<Orders>> watchorderlist() {
     try {
       return ref.read(DashboardRepositoryProvider).orderlist();
     } catch (e) {
@@ -14,7 +14,7 @@ class Dashboardcontrollers {
     }
   }
 
-  Stream<List<orders>> watcpackinglist() {
+  Stream<List<Orders>> watcpackinglist() {
     try {
       return ref.read(DashboardRepositoryProvider).packinglist();
     } catch (e) {
@@ -22,7 +22,7 @@ class Dashboardcontrollers {
     }
   }
 
-  Stream<List<orders>> watchdeliverdist() {
+  Stream<List<Orders>> watchdeliverdist() {
     try {
       return ref.read(DashboardRepositoryProvider).deliveredlist();
     } catch (e) {
@@ -30,7 +30,7 @@ class Dashboardcontrollers {
     }
   }
 
-  Stream<List<orders>> watchcompletedlist() {
+  Stream<List<Orders>> watchcompletedlist() {
     try {
       return ref.read(DashboardRepositoryProvider).completedlist();
     } catch (e) {
@@ -42,15 +42,15 @@ class Dashboardcontrollers {
 final DashboardcontrollersProvider = Provider<Dashboardcontrollers>((ref) {
   return Dashboardcontrollers(ref: ref);
 });
-final allordersprovider = StreamProvider<List<orders>>((ref) {
+final allordersprovider = StreamProvider<List<Orders>>((ref) {
   return ref.read(DashboardcontrollersProvider).watchorderlist();
 });
-final packingprovider = StreamProvider<List<orders>>((ref) {
+final packingprovider = StreamProvider<List<Orders>>((ref) {
   return ref.read(DashboardcontrollersProvider).watcpackinglist();
 });
-final deliveredprovider = StreamProvider<List<orders>>((ref) {
+final deliveredprovider = StreamProvider<List<Orders>>((ref) {
   return ref.read(DashboardcontrollersProvider).watchdeliverdist();
 });
-final completedprovider = StreamProvider<List<orders>>((ref) {
+final completedprovider = StreamProvider<List<Orders>>((ref) {
   return ref.read(DashboardcontrollersProvider).watchcompletedlist();
 });

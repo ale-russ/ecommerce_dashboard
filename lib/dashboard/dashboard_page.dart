@@ -23,102 +23,100 @@ class _DashboardpageState extends ConsumerState<Dashboardpage> {
     final delivered = ref.watch(deliveredprovider);
     final completed = ref.watch(completedprovider);
 
-    return Padding(
-        padding: const EdgeInsets.all(16),
-        child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: secondaryColor,
-              title: Text('Dashboard'),
-              actions: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      '${users.email}',
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ),
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: secondaryColor,
+          title: const Text('Dashboard'),
+          actions: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  '${users.email}',
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            const SizedBox(height: defaultPadding),
+            Row(
+              children: [
+                orders.when(
+                  data: (data) {
+                    return Dashboardwidget(
+                      title: 'All orders',
+                      count: data.length,
+                      value: data.length / 4,
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return adminErrorWidget(message: error.toString());
+                  },
+                  loading: () {
+                    return const LoadingWidget();
+                  },
+                ),
+                const SizedBox(width: defaultPadding),
+                packing.when(
+                  data: (data) {
+                    return Dashboardwidget(
+                      textcontainercolor: packcolor,
+                      title: 'packing',
+                      count: data.length,
+                      value: data.length / 4,
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return adminErrorWidget(message: error.toString());
+                  },
+                  loading: () {
+                    return const LoadingWidget();
+                  },
                 )
               ],
             ),
-            body: Column(
+            const SizedBox(height: defaultPadding),
+            Row(
               children: [
-                const SizedBox(height: defaultPadding),
-                Row(
-                  children: [
-                    orders.when(
-                      data: (data) {
-                        return dashboardwidget(
-                          title: 'All orders',
-                          count: data.length,
-                          value: data.length / 4,
-                        );
-                      },
-                      error: (Object error, StackTrace stackTrace) {
-                        return adminErrorWidget(message: error.toString());
-                      },
-                      loading: () {
-                        return const LoadingWidget();
-                      },
-                    ),
-                    const SizedBox(width: defaultPadding),
-                    packing.when(
-                      data: (data) {
-                        return dashboardwidget(
-                          textcontainercolor: packcolor,
-                          title: 'packing',
-                          count: data.length,
-                          value: data.length / 4,
-                        );
-                      },
-                      error: (Object error, StackTrace stackTrace) {
-                        return adminErrorWidget(message: error.toString());
-                      },
-                      loading: () {
-                        return const LoadingWidget();
-                      },
-                    )
-                  ],
+                delivered.when(
+                  data: (data) {
+                    return Dashboardwidget(
+                      textcontainercolor: delivercolor,
+                      title: 'delivered',
+                      count: data.length,
+                      value: data.length / 4,
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return adminErrorWidget(message: error.toString());
+                  },
+                  loading: () {
+                    return const LoadingWidget();
+                  },
                 ),
-                const SizedBox(height: defaultPadding),
-                Row(
-                  children: [
-                    delivered.when(
-                      data: (data) {
-                        return dashboardwidget(
-                          textcontainercolor: delivercolor,
-                          title: 'delivered',
-                          count: data.length,
-                          value: data.length / 4,
-                        );
-                      },
-                      error: (Object error, StackTrace stackTrace) {
-                        return adminErrorWidget(message: error.toString());
-                      },
-                      loading: () {
-                        return const LoadingWidget();
-                      },
-                    ),
-                    const SizedBox(width: defaultPadding),
-                    completed.when(
-                      data: (data) {
-                        return dashboardwidget(
-                          textcontainercolor: compcolor,
-                          title: 'completed',
-                          count: data.length,
-                          value: data.length / 4,
-                        );
-                      },
-                      error: (Object error, StackTrace stackTrace) {
-                        return adminErrorWidget(message: error.toString());
-                      },
-                      loading: () {
-                        return const LoadingWidget();
-                      },
-                    )
-                  ],
-                ),
+                const SizedBox(width: defaultPadding),
+                completed.when(
+                  data: (data) {
+                    return Dashboardwidget(
+                      textcontainercolor: compcolor,
+                      title: 'completed',
+                      count: data.length,
+                      value: data.length / 4,
+                    );
+                  },
+                  error: (Object error, StackTrace stackTrace) {
+                    return adminErrorWidget(message: error.toString());
+                  },
+                  loading: () {
+                    return const LoadingWidget();
+                  },
+                )
               ],
-            )));
+            ),
+          ],
+        ));
   }
 }
