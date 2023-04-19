@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:ecommerce_dashboard/orders_page/orders_ctrl.dart';
@@ -45,6 +47,23 @@ class _OrderpageState extends ConsumerState<Orderpage> {
               return PageView.builder(
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var container = Container(
+                    height: 250,
+                    // constraints: BoxConstraints(minHeight: 250),
+                    child: ListView.separated(
+                      itemCount: data.length,
+                      itemBuilder: (constext, index) {
+                        return Tableorders(
+                          cell1: data[index].orderId,
+                          cell2: data[index].orderDate,
+                          cell3: data[index].status,
+                          cell4: data[index].totalPrice,
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                    ),
+                  );
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -58,13 +77,15 @@ class _OrderpageState extends ConsumerState<Orderpage> {
                         cell4: 'price',
                       ),
                       const SizedBox(height: defaultPadding),
-                      for (var ord in data)
-                        Tableorders(
-                          cell1: ord.orderId,
-                          cell2: ord.orderDate,
-                          cell3: ord.status,
-                          cell4: ord.totalPrice,
-                        ),
+
+                      container
+                      // for (var ord in data)
+                      //   Tableorders(
+                      //     cell1: ord.orderId,
+                      //     cell2: ord.orderDate,
+                      //     cell3: ord.status,
+                      //     cell4: ord.totalPrice,
+                      //   ),
                     ],
                   );
                 },

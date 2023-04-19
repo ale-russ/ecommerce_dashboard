@@ -19,7 +19,7 @@ dependencies:
   data_tables: ^1.4.0
 
   #routing
-  go_router: ^6.5.6
+  go_router: ^6.5.7
 
   syncfusion_flutter_charts: ^21.1.39
 

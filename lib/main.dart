@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'authenticate/screens/auth_page.dart';
@@ -17,25 +18,35 @@ Future<void> main() async {
   } catch (e) {}
 
   runApp(
-    const ProviderScope(
+    ProviderScope(
       child: App(),
     ),
   );
 }
 
 class App extends StatelessWidget {
-  const App({
+  App({
     super.key,
   });
 
+  final GoRouter router = GoRouter(routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) {
+        return const AuthPage();
+      },
+    ),
+  ]);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: bgColor,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
-      home: const AuthPage(),
+      routerConfig: router,
+      // home: const AuthPage(),
     );
   }
 }

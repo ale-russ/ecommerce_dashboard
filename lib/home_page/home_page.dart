@@ -2,22 +2,21 @@ import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../account_page/account.dart';
 import '../dashboard/dashboard.dart';
 import '../orders_page/orders.dart';
 import '../product_page/product.dart';
 
-class Homepage extends StatefulHookConsumerWidget {
-  Homepage({
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({
     Key? key,
   }) : super(key: key);
   @override
-  ConsumerState<Homepage> createState() => HomepageState();
+  ConsumerState<HomePage> createState() => HomepageState();
 }
 
-class HomepageState extends ConsumerState<Homepage> {
+class HomepageState extends ConsumerState<HomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -47,11 +46,11 @@ class HomepageState extends ConsumerState<Homepage> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.bookmark),
-              label: 'orders',
+              label: 'Orders',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.production_quantity_limits),
-              label: 'products',
+              label: 'Products',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

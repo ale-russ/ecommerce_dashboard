@@ -3,25 +3,25 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class orders {
+class Orders {
   final String? orderId;
   final String? orderDate;
   final String? status;
   final String? totalPrice;
 
-  orders({
+  Orders({
     this.orderId,
     this.orderDate,
     this.status,
     this.totalPrice,
   });
-  orders copyWith({
+  Orders copyWith({
     String? orderId,
     String? orderDate,
     String? status,
     String? totalPrice,
   }) {
-    return orders(
+    return Orders(
       orderId: orderId ?? this.orderId,
       orderDate: orderDate ?? this.orderDate,
       status: status ?? this.status,
@@ -38,8 +38,8 @@ class orders {
     };
   }
 
-  factory orders.fromMap(Map<String, dynamic> map) {
-    return orders(
+  factory Orders.fromMap(Map<String, dynamic> map) {
+    return Orders(
       orderId: map['orderId'] != null ? map['orderId'] as String : null,
       orderDate: map['orderDate'] != null ? map['orderDate'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
@@ -50,8 +50,8 @@ class orders {
 
   String toJson() => json.encode(toMap());
 
-  factory orders.fromJson(String source) =>
-      orders.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Orders.fromJson(String source) =>
+      Orders.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -59,7 +59,7 @@ class orders {
   }
 
   @override
-  bool operator ==(covariant orders other) {
+  bool operator ==(covariant Orders other) {
     if (identical(this, other)) return true;
     return other.orderId == orderId &&
         other.orderDate == orderDate &&

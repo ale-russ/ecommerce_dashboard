@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/authenticate/screens/registration.dart';
-import 'package:ecommerce_dashboard/dashboard_page.dart';
 import 'package:ecommerce_dashboard/home_page/home_page.dart';
 import 'package:ecommerce_dashboard/widget/textfield.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +186,7 @@ Future<void> _googlesiginbutton(BuildContext context) async {
     // Save the user's information to Firestore
     await _saveUserToFirestore(userCredential.user!);
     navigator.push(MaterialPageRoute(
-      builder: (context) => Homepage(),
+      builder: (context) => HomePage(),
     ));
     log('Signed in user: ${user.displayName}');
   } catch (e) {
