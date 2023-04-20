@@ -39,7 +39,7 @@ class AppRoutes {
             GoRoute(
                 path: 'homePage',
                 builder: (context, state) {
-                  return const HomePage();
+                  return HomePage();
                 },
                 routes: [
                   ShellRoute(
@@ -51,7 +51,7 @@ class AppRoutes {
                       GoRoute(
                           path: 'dashboard',
                           builder: (context, state) {
-                            return Dashboardpage();
+                            return const Dashboardpage();
                           }),
                       GoRoute(
                           path: 'orders',
@@ -83,45 +83,6 @@ class AppRoutes {
                   ),
                 ]),
           ]),
-
-      // ShellRoute(
-      //   navigatorKey: _shellNavigatorKey,
-      //   builder: (context, state, child) {
-      //     return const HomePage();
-      //   },
-      //   routes: [
-      //     GoRoute(
-      //         path: 'dashboard',
-      //         builder: (context, state) {
-      //           return Dashboardpage();
-      //         }),
-      //     GoRoute(
-      //         path: '/orders',
-      //         builder: (context, state) {
-      //           return const Orderpage();
-      //         }),
-      //     GoRoute(
-      //         path: '/products',
-      //         builder: (context, state) {
-      //           return Productpage();
-      //         },
-      //         routes: [
-      //           GoRoute(
-      //             path: 'add-products',
-      //             builder: (context, state) {
-      //               return const AddProductPage();
-      //             },
-      //           )
-      //         ]),
-      //     GoRoute(
-      //       path: '/profile',
-      //       builder: (context, state) {
-      //         return const AccountPage();
-      //       },
-      // ),
-
-      // ],
-      // ),
     ],
   );
 }

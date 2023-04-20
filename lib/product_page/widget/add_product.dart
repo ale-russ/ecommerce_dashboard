@@ -9,7 +9,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AddProductPage extends ConsumerStatefulWidget {
-  const AddProductPage({super.key});
+  const AddProductPage({super.key, this.id});
+
+  final int? id;
 
   @override
   ConsumerState<AddProductPage> createState() => _AddproductState();

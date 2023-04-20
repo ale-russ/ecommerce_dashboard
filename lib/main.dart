@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:ecommerce_dashboard/routes/router.dart';
+import 'package:ecommerce_dashboard/routes/router_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,35 +22,33 @@ Future<void> main() async {
   } catch (e) {}
 
   runApp(
-    ProviderScope(
+    const ProviderScope(
       child: App(),
     ),
   );
 }
 
-class App extends StatelessWidget {
-  App({
+class App extends ConsumerWidget {
+  const App({
     super.key,
   });
 
-  // final GoRouter router = GoRouter(routes: [
-  //   GoRoute(
-  //     path: '/',
-  //     builder: (context, state) {
-  //       return const AuthPage();
-  //     },
-  //   ),
-  // ]);
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routerProvider);
+
+    log('router: $router');
+
     return MaterialApp.router(
+      routeInformationParser: AppRoutes().router.routeInformationParser,
+      routeInformationProvider: AppRoutes().router.routeInformationProvider,
+      routerDelegate: AppRoutes().router.routerDelegate,
+      // routerConfig: router,
+      // routerConfig: AppRoutes().router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: bgColor,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
-      routerConfig: AppRoutes().router,
-      // home: const AuthPage(),
     );
   }
 }
