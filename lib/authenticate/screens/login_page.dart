@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:ecommerce_dashboard/authenticate/providers/isObuscre_provider.dart';
 import 'package:ecommerce_dashboard/authenticate/screens/registration.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../controller/login_controller.dart';
@@ -95,7 +96,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     if (isValid) {
                       ref
                           .read(loginControllerProvider.notifier)
-                          .login(emailController.text, passwordController.text);
+                          .login(emailController.text, passwordController.text)
+                          .then((value) {
+                        if (value) context.go('/homePage');
+                      });
                     }
                   },
                   child: const Text('Sign In'),
@@ -106,10 +110,11 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegistrationPage()));
+                    context.go('/registration');
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => RegistrationPage()));
                   },
                   child: const Text(
                     'Create new account',

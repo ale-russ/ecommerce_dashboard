@@ -39,84 +39,87 @@ class _DashboardpageState extends ConsumerState<Dashboardpage> {
             )
           ],
         ),
-        body: Column(
-          children: [
-            const SizedBox(height: defaultPadding),
-            Row(
-              children: [
-                orders.when(
-                  data: (data) {
-                    return Dashboardwidget(
-                      title: 'All orders',
-                      count: data.length,
-                      value: data.length / 4,
-                    );
-                  },
-                  error: (Object error, StackTrace stackTrace) {
-                    return adminErrorWidget(message: error.toString());
-                  },
-                  loading: () {
-                    return const LoadingWidget();
-                  },
-                ),
-                const SizedBox(width: defaultPadding),
-                packing.when(
-                  data: (data) {
-                    return Dashboardwidget(
-                      textcontainercolor: packcolor,
-                      title: 'packing',
-                      count: data.length,
-                      value: data.length / 4,
-                    );
-                  },
-                  error: (Object error, StackTrace stackTrace) {
-                    return adminErrorWidget(message: error.toString());
-                  },
-                  loading: () {
-                    return const LoadingWidget();
-                  },
-                )
-              ],
-            ),
-            const SizedBox(height: defaultPadding),
-            Row(
-              children: [
-                delivered.when(
-                  data: (data) {
-                    return Dashboardwidget(
-                      textcontainercolor: delivercolor,
-                      title: 'delivered',
-                      count: data.length,
-                      value: data.length / 4,
-                    );
-                  },
-                  error: (Object error, StackTrace stackTrace) {
-                    return adminErrorWidget(message: error.toString());
-                  },
-                  loading: () {
-                    return const LoadingWidget();
-                  },
-                ),
-                const SizedBox(width: defaultPadding),
-                completed.when(
-                  data: (data) {
-                    return Dashboardwidget(
-                      textcontainercolor: compcolor,
-                      title: 'completed',
-                      count: data.length,
-                      value: data.length / 4,
-                    );
-                  },
-                  error: (Object error, StackTrace stackTrace) {
-                    return adminErrorWidget(message: error.toString());
-                  },
-                  loading: () {
-                    return const LoadingWidget();
-                  },
-                )
-              ],
-            ),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: [
+              const SizedBox(height: defaultPadding),
+              Row(
+                children: [
+                  orders.when(
+                    data: (data) {
+                      return Dashboardwidget(
+                        title: 'All orders',
+                        count: data.length,
+                        value: data.length / 4,
+                      );
+                    },
+                    error: (Object error, StackTrace stackTrace) {
+                      return AdminErrorWidget(message: error.toString());
+                    },
+                    loading: () {
+                      return const LoadingWidget();
+                    },
+                  ),
+                  const SizedBox(width: defaultPadding),
+                  packing.when(
+                    data: (data) {
+                      return Dashboardwidget(
+                        textcontainercolor: packcolor,
+                        title: 'packing',
+                        count: data.length,
+                        value: data.length / 4,
+                      );
+                    },
+                    error: (Object error, StackTrace stackTrace) {
+                      return AdminErrorWidget(message: error.toString());
+                    },
+                    loading: () {
+                      return const LoadingWidget();
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(height: defaultPadding),
+              Row(
+                children: [
+                  delivered.when(
+                    data: (data) {
+                      return Dashboardwidget(
+                        textcontainercolor: delivercolor,
+                        title: 'delivered',
+                        count: data.length,
+                        value: data.length / 4,
+                      );
+                    },
+                    error: (Object error, StackTrace stackTrace) {
+                      return AdminErrorWidget(message: error.toString());
+                    },
+                    loading: () {
+                      return const LoadingWidget();
+                    },
+                  ),
+                  const SizedBox(width: defaultPadding),
+                  completed.when(
+                    data: (data) {
+                      return Dashboardwidget(
+                        textcontainercolor: compcolor,
+                        title: 'completed',
+                        count: data.length,
+                        value: data.length / 4,
+                      );
+                    },
+                    error: (Object error, StackTrace stackTrace) {
+                      return AdminErrorWidget(message: error.toString());
+                    },
+                    loading: () {
+                      return const LoadingWidget();
+                    },
+                  )
+                ],
+              ),
+            ],
+          ),
         ));
   }
 }

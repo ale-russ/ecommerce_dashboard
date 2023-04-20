@@ -1,4 +1,4 @@
-import 'package:ecommerce_dashboard/authenticate/login_page.dart';
+import 'package:ecommerce_dashboard/authenticate/screens/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class AuthPage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return HomePage();
+              return const HomePage();
             }
             return const LoginPage();
           }),

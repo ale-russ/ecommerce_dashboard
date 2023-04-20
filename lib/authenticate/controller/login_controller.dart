@@ -8,15 +8,18 @@ class LoginControllerNotifier extends StateNotifier<LoadStatus> {
 
   final Ref ref;
 
-  void login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     state = LoadStatus.loading;
 
     try {
-      await ref.read(authProvider).signInWithEmailPassword(email, password);
+      return await ref
+          .read(authProvider)
+          .signInWithEmailPassword(email, password);
       state = LoadStatus.loaded;
     } catch (e) {
       state = LoadStatus.error;
     }
+    return false;
   }
 
   Future<bool> signUp(String email, String password) async {

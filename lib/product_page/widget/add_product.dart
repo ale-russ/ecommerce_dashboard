@@ -8,14 +8,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class Addproduct extends ConsumerStatefulWidget {
-  const Addproduct({super.key});
+class AddProductPage extends ConsumerStatefulWidget {
+  const AddProductPage({super.key});
 
   @override
-  ConsumerState<Addproduct> createState() => _AddproductState();
+  ConsumerState<AddProductPage> createState() => _AddproductState();
 }
 
-class _AddproductState extends ConsumerState<Addproduct> {
+class _AddproductState extends ConsumerState<AddProductPage> {
   final TextEditingController name = TextEditingController();
   final TextEditingController price = TextEditingController();
   File? _imageFile;

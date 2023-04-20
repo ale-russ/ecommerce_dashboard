@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../../models/product.dart';
@@ -53,10 +54,14 @@ class AddProductButton extends StatelessWidget {
       alignment: Alignment.bottomRight,
       child: TextButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Addproduct()));
+          context.goNamed('add-products');
+          // Navigator.push(context,
+          //     MaterialPageRoute(builder: (context) => const AddProductPage()));
         },
-        child: const Text('Add product', style: TextStyle(color: Colors.white)),
+        child: const Text(
+          'Add product',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }

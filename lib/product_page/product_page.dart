@@ -62,7 +62,7 @@ class ProductPage extends ConsumerWidget {
           );
         },
         error: (Object error, StackTrace stackTrace) {
-          return adminErrorWidget(message: error.toString());
+          return AdminErrorWidget(message: error.toString());
         },
         loading: () {
           return const LoadingWidget();

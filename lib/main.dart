@@ -1,3 +1,4 @@
+import 'package:ecommerce_dashboard/routes/router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,14 +30,14 @@ class App extends StatelessWidget {
     super.key,
   });
 
-  final GoRouter router = GoRouter(routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) {
-        return const AuthPage();
-      },
-    ),
-  ]);
+  // final GoRouter router = GoRouter(routes: [
+  //   GoRoute(
+  //     path: '/',
+  //     builder: (context, state) {
+  //       return const AuthPage();
+  //     },
+  //   ),
+  // ]);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class App extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: bgColor,
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)),
-      routerConfig: router,
+      routerConfig: AppRoutes().router,
       // home: const AuthPage(),
     );
   }

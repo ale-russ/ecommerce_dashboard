@@ -13,13 +13,14 @@ class FirebaseServices {
   // Stream<User?> get authStateChange => _auth.idTokenChanges();
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  Future<void> signInWithEmailPassword(String email, String password) async {
+  Future<bool> signInWithEmailPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       User user = userCredential.user!;
+      return true;
     } on FirebaseAuthException catch (e) {
       // if (e.code == 'user-not-found') {
       //   log('No user found for that email.');
@@ -28,6 +29,7 @@ class FirebaseServices {
       // }
       // log('error: ${e.toString()}');
     }
+    return false;
   }
 
   Future<void> createUserButton(String email, String password) async {

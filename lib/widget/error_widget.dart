@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class adminErrorWidget extends StatelessWidget {
-  const adminErrorWidget({Key? key, required this.message}) : super(key: key);
+class AdminErrorWidget extends StatelessWidget {
+  const AdminErrorWidget({Key? key, required this.message}) : super(key: key);
 
   final String message;
 
