@@ -14,6 +14,7 @@ import '../home_page/home_page.dart';
 import '../models/product.dart';
 import '../orders_page/orders_page.dart';
 import '../product_page/screens/product.dart';
+import '../product_page/screens/product_page.dart';
 import '../product_page/screens/products_detali.dart';
 import '../product_page/widget/add_product.dart';
 
@@ -85,7 +86,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   path: '/products',
                   name: 'products',
                   builder: (context, state) {
-                    return Productpage();
+                    return ProductPage();
                   },
                   routes: [
                     GoRoute(
