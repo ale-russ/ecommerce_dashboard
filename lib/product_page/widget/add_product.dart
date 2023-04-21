@@ -8,6 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../provider/upload_info_provider.dart';
+
 class AddProductPage extends ConsumerStatefulWidget {
   const AddProductPage({super.key, this.id});
 
@@ -134,7 +136,26 @@ class _AddproductState extends ConsumerState<AddProductPage> {
                 child: SizedBox(
                   width: 300,
                   child: ElevatedButton(
-                    onPressed: _uploadImage,
+                    // onPressed: _uploadImage,
+                    onPressed: () async {
+                      var scaffoldMessenger = ScaffoldMessenger.of(context);
+                      var status = await ref
+                          .read(uploadInfoProvider.notifier)
+                          .uploadImage(
+                              context, name.text, price.text, _imageFile);
+                      if (status) {
+                        scaffoldMessenger.showSnackBar(const SnackBar(
+                            content: Text(
+                          'Uploaded Successfully',
+                          style: TextStyle(color: Colors.green),
+                        )));
+                      }
+                      scaffoldMessenger.showSnackBar(SnackBar(
+                          content: const Text(
+                        'Opps... Something went wrong. Please try again',
+                        style: TextStyle(color: Colors.red),
+                      )));
+                    },
                     child: const Text('Add product'),
                   ),
                 ),
@@ -144,51 +165,5 @@ class _AddproductState extends ConsumerState<AddProductPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _uploadImage() async {
-    final FirebaseStorage storage = FirebaseStorage.instance;
-    final fileName = '${DateTime.now().microsecondsSinceEpoch}';
-    final Reference ref = storage.ref().child('images/$fileName');
-    final UploadTask uploadTask = ref.putFile(_imageFile!);
-    final TaskSnapshot snapshot = await uploadTask.whenComplete(() {
-      print('sucessfully');
-    });
-    final String downloadUrl = await snapshot.ref.getDownloadURL();
-    setState(() {
-      _imageUrl = downloadUrl.toString();
-      print('image file$_imageUrl');
-    });
-
-    final DocumentReference<Map<String, dynamic>> images =
-        FirebaseFirestore.instance.collection('products').doc('$fileName');
-
-    final String namedesc = name.text;
-    final String totalprice = price.text;
-    final imageUrl = _imageUrl;
-
-    final products = Product(
-      name: namedesc,
-      price: totalprice,
-      imageURL: imageUrl.toString(),
-    );
-
-    try {
-      final json = products.toMap();
-      await images.set(json);
-      name.clear();
-      price.clear();
-      setState(() {
-        _imageFile = null;
-        _imageUrl = null;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('product uploaded successfully!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to upload product')),
-      );
-    }
   }
 }

@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../controller/login_controller.dart';
+import '../providers/auth_state_change_provider.dart';
 import '../widgets/email_password_field.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -98,7 +99,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                           .read(loginControllerProvider.notifier)
                           .login(emailController.text, passwordController.text)
                           .then((value) {
-                        if (value) context.go('/homePage');
+                        ref.read(loggedIn.notifier).setLogin(value);
                       });
                     }
                   },

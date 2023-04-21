@@ -13,6 +13,8 @@ import '../controller/login_controller.dart';
 import 'login_page.dart';
 
 class RegistrationPage extends ConsumerWidget {
+  RegistrationPage({super.key});
+
   final _formKey = GlobalKey<FormState>();
   bool isObscured = true;
 

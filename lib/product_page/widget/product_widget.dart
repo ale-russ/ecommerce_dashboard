@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../constants/constants.dart';
 import '../../models/product.dart';
 import '../../widget/image_widget.dart';
+import '../screens/products_detali.dart';
 import 'add_product.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -16,28 +17,40 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: double.infinity,
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: secondaryColor,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Imagewidget(
-            imageurl: prod.imageURL,
-          ),
-          const SizedBox(height: xsPadding),
-          DescText(name: prod.name!),
-          DescText(
-            name: prod.price!,
-            color: Colors.green,
-            isPrice: true,
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        context.goNamed('product-details', extra: prod);
+        // Navigator.push(context, MaterialPageRoute(
+        //   builder: (context) {
+        //     return ProductDetailsPage(
+        //       product: prod,
+        //     );
+        //   },
+        // ));
+      },
+      child: Container(
+        width: 200,
+        height: double.infinity,
+        margin: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: secondaryColor,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Imagewidget(
+              imageurl: prod.imageURL,
+            ),
+            const SizedBox(height: xsPadding),
+            DescText(name: prod.name!),
+            DescText(
+              name: prod.price!,
+              color: Colors.green,
+              isPrice: true,
+            ),
+          ],
+        ),
       ),
     );
   }

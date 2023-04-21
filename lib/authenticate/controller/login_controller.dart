@@ -35,11 +35,15 @@ class LoginControllerNotifier extends StateNotifier<LoadStatus> {
   }
 
   void signOut() async {
-    await ref.read(authProvider).signOut();
+    await ref.read(authProvider).signOut().then((value) {
+      ref.read(loggedIn.notifier).setLogin(false);
+    });
   }
 
   void googleSignIn() async {
-    await ref.read(authProvider).googleSigninButton();
+    await ref.read(authProvider).googleSigninButton().then((value) {
+      ref.read(loggedIn.notifier).setLogin(true);
+    });
   }
 }
 

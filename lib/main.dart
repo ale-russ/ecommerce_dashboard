@@ -1,6 +1,7 @@
 import 'dart:developer';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
-import 'package:ecommerce_dashboard/routes/router.dart';
+import 'package:ecommerce_dashboard/routes/app_router.dart';
 import 'package:ecommerce_dashboard/routes/router_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,12 @@ Future<void> main() async {
     // ignore: empty_catches
   } catch (e) {}
 
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
+
   runApp(
     const ProviderScope(
       child: App(),
@@ -37,13 +44,12 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
 
-    log('router: $router');
+    // log('router: $router');
 
     return MaterialApp.router(
-      routeInformationParser: AppRoutes().router.routeInformationParser,
-      routeInformationProvider: AppRoutes().router.routeInformationProvider,
-      routerDelegate: AppRoutes().router.routerDelegate,
-      // routerConfig: router,
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      routerDelegate: router.routerDelegate,
       // routerConfig: AppRoutes().router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
