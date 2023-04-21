@@ -28,7 +28,12 @@ class RegistrationPage extends ConsumerWidget {
     final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        centerTitle: true,
+        backgroundColor: secondaryColor,
+        title: const Text('Register'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

@@ -22,6 +22,7 @@ class ProductDetailsPage extends ConsumerWidget {
             height: 200,
             width: 350,
             decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.withOpacity(0.1)),
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
                     image: NetworkImage(

@@ -47,6 +47,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(22, 16, 75, 0.6),
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: secondaryColor,
         title: const Text('Login'),
       ),
@@ -111,7 +113,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () {
-                    context.go('/registration');
+                    context.push('/register');
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(

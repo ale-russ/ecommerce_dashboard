@@ -19,12 +19,12 @@ final loggedIn =
     StateNotifierProvider<LoginNotifier, bool>((ref) => LoginNotifier(false));
 
 class LoginNotifier extends StateNotifier<bool> {
-  LoginNotifier(bool isLoggedIn) : super(isLoggedIn);
-  @override
-  build() {
-    log('State: $state');
-    return state;
-  }
+  LoginNotifier(state) : super(state);
+  // @override
+  // build() {
+  //   log('State: $state');
+  //   return state;
+  // }
 
   void setLogin(bool isLoggedIn) {
     state = isLoggedIn;

@@ -13,7 +13,6 @@ import '../dashboard/dashboard_page.dart';
 import '../home_page/home_page.dart';
 import '../models/product.dart';
 import '../orders_page/orders_page.dart';
-import '../product_page/screens/product.dart';
 import '../product_page/screens/product_page.dart';
 import '../product_page/screens/products_detali.dart';
 import '../product_page/widget/add_product.dart';
@@ -30,12 +29,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       initialLocation: '/',
       redirect: (context, state) {
         final isLoggingIn = state.subloc == '/login';
-        final isRegistering = state.subloc == '/registration';
+        final isRegistering = state.subloc == '/register';
+
         log('isLoggedIn: $isLoggedIn');
+
         if (!isLoggedIn && !isLoggingIn && !isRegistering) {
           return '/login';
         }
-        if (isLoggedIn && isLoggingIn) {
+        if (!isLoggedIn && !isLoggingIn && isRegistering) {
+          return '/register';
+        }
+        if (isLoggedIn && isLoggingIn || isRegistering) {
           return '/';
         }
 
@@ -51,8 +55,8 @@ final routerProvider = Provider<GoRouter>((ref) {
               );
             }),
         GoRoute(
-            path: '/registration',
-            name: 'registration',
+            path: '/register',
+            name: 'register',
             builder: (context, state) {
               return RegistrationPage(
                 key: state.pageKey,
