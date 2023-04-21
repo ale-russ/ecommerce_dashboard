@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../constants/constants.dart';
 import '../../models/product.dart';
 import '../../widget/image_widget.dart';
-import 'add_product.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -53,10 +52,8 @@ class AddProductButton extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: TextButton(
-        onPressed: () {
+        onPressed: () async {
           context.goNamed('add-products');
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => const AddProductPage()));
         },
         child: const Text(
           'Add product',

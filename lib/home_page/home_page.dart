@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../account_page/account_page.dart';
 import '../dashboard/dashboard_page.dart';
 import '../orders_page/orders_page.dart';
-import '../product_page/product_page.dart';
+import '../product_page/screens/product_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({
@@ -29,36 +29,38 @@ class HomepageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgColor,
-      body: _getBodyWidget(),
-      bottomNavigationBar: Container(
-        color: Colors.blue,
-        child: BottomNavigationBar(
-          selectedItemColor: Colors.amber,
-          unselectedItemColor: Colors.black,
-          // fixedColor: Colors.amber,
-          backgroundColor: Colors.blue,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
-              label: 'Orders',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.production_quantity_limits),
-              label: 'Products',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: bgColor,
+        body: _getBodyWidget(),
+        bottomNavigationBar: Container(
+          color: Colors.blue,
+          child: BottomNavigationBar(
+            selectedItemColor: Colors.amber,
+            unselectedItemColor: Colors.black,
+            // fixedColor: Colors.amber,
+            backgroundColor: Colors.blue,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark),
+                label: 'Orders',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.production_quantity_limits),
+                label: 'Products',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+          ),
         ),
       ),
     );

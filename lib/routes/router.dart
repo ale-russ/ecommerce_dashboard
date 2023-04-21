@@ -9,6 +9,7 @@ import '../dashboard/dashboard_page.dart';
 import '../home_page/home_page.dart';
 import '../orders_page/orders_page.dart';
 import '../product_page/screens/product.dart';
+import '../product_page/screens/product_page.dart';
 import '../product_page/widget/add_product.dart';
 
 class AppRoutes {
@@ -62,7 +63,7 @@ class AppRoutes {
                           name: 'products',
                           path: 'products',
                           builder: (context, state) {
-                            return Productpage();
+                            return ProductPage();
                           },
                           routes: [
                             GoRoute(

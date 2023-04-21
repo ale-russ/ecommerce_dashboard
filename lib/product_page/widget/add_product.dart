@@ -4,9 +4,12 @@ import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:ecommerce_dashboard/models/product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../notifications/notification_message.dart';
 
 class AddProductPage extends ConsumerStatefulWidget {
   const AddProductPage({super.key});
@@ -21,17 +24,6 @@ class _AddproductState extends ConsumerState<AddProductPage> {
   File? _imageFile;
   String? _imageUrl;
   final User users = FirebaseAuth.instance.currentUser!;
-
-  Future<void> _getImage(ImageSource source) async {
-    final picker = ImagePicker();
-    // final pickedFile = await picker.getImage(source: source);
-    final pickedFile = await picker.pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
-  }
 
   @override
   void dispose() {
@@ -144,18 +136,28 @@ class _AddproductState extends ConsumerState<AddProductPage> {
     );
   }
 
+  Future<void> _getImage(ImageSource source) async {
+    final picker = ImagePicker();
+    // final pickedFile = await picker.getImage(source: source);
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
   Future<void> _uploadImage() async {
     final FirebaseStorage storage = FirebaseStorage.instance;
-    final fileName = '${DateTime.now().microsecondsSinceEpoch}';
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}';
     final Reference ref = storage.ref().child('images/$fileName');
     final UploadTask uploadTask = ref.putFile(_imageFile!);
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {
-      print('sucessfully');
+      showNotification('product', name.text);
     });
     final String downloadUrl = await snapshot.ref.getDownloadURL();
     setState(() {
       _imageUrl = downloadUrl.toString();
-      print('image file$_imageUrl');
     });
 
     final DocumentReference<Map<String, dynamic>> images =
@@ -189,4 +191,18 @@ class _AddproductState extends ConsumerState<AddProductPage> {
       );
     }
   }
+}
+
+void showNotification(String title, String body) {
+  flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      'new product added $body',
+      NotificationDetails(
+          android: AndroidNotificationDetails(channel.id, channel.name,
+              channelDescription: channel.description,
+              importance: Importance.high,
+              color: Colors.blue,
+              playSound: true,
+              icon: '@mipmap/ic_launcher')));
 }

@@ -64,17 +64,13 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          hint: users.displayName,
-                          // hint: data['firstName'] ??
-                          //     'the competition description ',
+                          hint: users.displayName!.split(' ')[0],
                         ),
                         const SizedBox(height: defaultPadding),
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          hint: users.displayName,
-                          // hint: data['lastName'] ??
-                          //     'the competition description ',
+                          hint: users.displayName!.split(' ')[1],
                         ),
                         const SizedBox(height: defaultPadding * 2),
                         SizedBox(
