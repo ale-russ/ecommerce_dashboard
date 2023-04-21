@@ -1,10 +1,10 @@
 import 'package:ecommerce_dashboard/constants/constants.dart';
-import 'package:ecommerce_dashboard/product_page/products_ctrl.dart';
+import 'package:ecommerce_dashboard/product_page/widget/controllers/products_ctrl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../widget/error_widget.dart';
-import 'widget/product_widget.dart';
+import '../../../widget/error_widget.dart';
+import '../widget/product_widget.dart';
 
 class ProductPage extends ConsumerWidget {
   ProductPage({Key? key}) : super(key: key);

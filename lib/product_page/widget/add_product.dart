@@ -4,10 +4,12 @@ import 'package:ecommerce_dashboard/constants/constants.dart';
 import 'package:ecommerce_dashboard/models/product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../notifications/notification_message.dart';
 import '../provider/upload_info_provider.dart';
 
 class AddProductPage extends ConsumerStatefulWidget {
@@ -25,17 +27,6 @@ class _AddproductState extends ConsumerState<AddProductPage> {
   File? _imageFile;
   String? _imageUrl;
   final User users = FirebaseAuth.instance.currentUser!;
-
-  Future<void> _getImage(ImageSource source) async {
-    final picker = ImagePicker();
-    // final pickedFile = await picker.getImage(source: source);
-    final pickedFile = await picker.pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
-  }
 
   @override
   void dispose() {
@@ -165,5 +156,30 @@ class _AddproductState extends ConsumerState<AddProductPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _getImage(ImageSource source) async {
+    final picker = ImagePicker();
+    // final pickedFile = await picker.getImage(source: source);
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  void showNotification(String title, String body) {
+    flutterLocalNotificationsPlugin.show(
+        0,
+        title,
+        'new product added $body',
+        NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                importance: Importance.high,
+                color: Colors.blue,
+                playSound: true,
+                icon: '@mipmap/ic_launcher')));
   }
 }

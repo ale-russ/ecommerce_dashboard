@@ -66,10 +66,8 @@ class AddProductButton extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: TextButton(
-        onPressed: () {
+        onPressed: () async {
           context.goNamed('add-products');
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => const AddProductPage()));
         },
         child: const Text(
           'Add product',
