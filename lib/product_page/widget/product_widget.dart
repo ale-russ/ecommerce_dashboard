@@ -20,13 +20,6 @@ class ProductWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         context.goNamed('product-details', extra: prod);
-        // Navigator.push(context, MaterialPageRoute(
-        //   builder: (context) {
-        //     return ProductDetailsPage(
-        //       product: prod,
-        //     );
-        //   },
-        // ));
       },
       child: Container(
         width: 200,
