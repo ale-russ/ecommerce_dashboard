@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ecommerce_dashboard/account_page/account_ctrl.dart';
 import 'package:ecommerce_dashboard/constants/constants.dart';
-import 'package:ecommerce_dashboard/widget/error_widget.dart';
-import 'package:ecommerce_dashboard/widget/textfield.dart';
+import 'package:ecommerce_dashboard/common_widget/error_widget.dart';
+import 'package:ecommerce_dashboard/common_widget/textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../authenticate/controller/login_controller.dart';
+import '../../authenticate/controller/login_controller.dart';
 
 class AccountPage extends ConsumerStatefulWidget {
   const AccountPage({super.key});

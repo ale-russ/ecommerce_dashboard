@@ -2,7 +2,7 @@ import 'package:ecommerce_dashboard/models/orders.dart';
 import 'package:ecommerce_dashboard/models/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../products_repo.dart';
+import '../services/products_repo.dart';
 
 class Productscontrollers {
   Productscontrollers({required this.ref});

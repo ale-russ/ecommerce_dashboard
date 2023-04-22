@@ -28,6 +28,17 @@ class _AddproductState extends ConsumerState<AddProductPage> {
   String? _imageUrl;
   final User users = FirebaseAuth.instance.currentUser!;
 
+  Future<void> _getImage(ImageSource source) async {
+    final picker = ImagePicker();
+    // final pickedFile = await picker.getImage(source: source);
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   void dispose() {
     name.dispose();
@@ -141,8 +152,8 @@ class _AddproductState extends ConsumerState<AddProductPage> {
                           style: TextStyle(color: Colors.green),
                         )));
                       }
-                      scaffoldMessenger.showSnackBar(SnackBar(
-                          content: const Text(
+                      scaffoldMessenger.showSnackBar(const SnackBar(
+                          content: Text(
                         'Opps... Something went wrong. Please try again',
                         style: TextStyle(color: Colors.red),
                       )));
@@ -156,30 +167,5 @@ class _AddproductState extends ConsumerState<AddProductPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _getImage(ImageSource source) async {
-    final picker = ImagePicker();
-    // final pickedFile = await picker.getImage(source: source);
-    final pickedFile = await picker.pickImage(source: source);
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
-  }
-
-  void showNotification(String title, String body) {
-    flutterLocalNotificationsPlugin.show(
-        0,
-        title,
-        'new product added $body',
-        NotificationDetails(
-            android: AndroidNotificationDetails(channel.id, channel.name,
-                channelDescription: channel.description,
-                importance: Importance.high,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher')));
   }
 }

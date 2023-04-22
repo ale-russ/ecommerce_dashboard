@@ -1,11 +1,11 @@
 import 'package:ecommerce_dashboard/constants/constants.dart';
-import 'package:ecommerce_dashboard/dashboard/dashboard_ctrl.dart';
+import 'package:ecommerce_dashboard/dashboard/controllers/dashboard_ctrl.dart';
 import 'package:ecommerce_dashboard/dashboard/widget/card_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widget/error_widget.dart';
+import '../../common_widget/error_widget.dart';
 
 class Dashboardpage extends ConsumerStatefulWidget {
   const Dashboardpage({super.key});

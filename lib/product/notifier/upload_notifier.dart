@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommerce_dashboard/notifications/notification_message.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,12 +21,14 @@ class UploadNotifier extends AutoDisposeNotifier<Product> {
 
   Future<bool> uploadImage(BuildContext context, String? name, String? price,
       File? imageFile) async {
+    Notificationmsg notifmsg = Notificationmsg();
     String? imageUrl;
     final FirebaseStorage storage = FirebaseStorage.instance;
-    final fileName = '${DateTime.now().microsecondsSinceEpoch}';
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}';
     final Reference ref = storage.ref().child('images/$fileName');
     final UploadTask uploadTask = ref.putFile(imageFile!);
     final TaskSnapshot snapshot = await uploadTask.whenComplete(() {
+      notifmsg.showNotification('product', name!);
       log('Successfull');
     });
 

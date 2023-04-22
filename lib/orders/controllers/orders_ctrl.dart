@@ -1,5 +1,5 @@
 import 'package:ecommerce_dashboard/models/orders.dart';
-import 'package:ecommerce_dashboard/orders_page/orders_repo.dart';
+import 'package:ecommerce_dashboard/orders/services/orders_repo.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

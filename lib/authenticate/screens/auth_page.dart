@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ecommerce_dashboard/authenticate/screens/login_page.dart';
-import '../../home_page/home_page.dart';
+import '../../home/screen/home_page.dart';
 import '../providers/auth_state_change_provider.dart';
 
 class AuthPage extends ConsumerWidget {

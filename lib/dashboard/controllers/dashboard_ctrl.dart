@@ -1,4 +1,4 @@
-import 'package:ecommerce_dashboard/dashboard/dashboard_repo.dart';
+import 'package:ecommerce_dashboard/dashboard/services/dashboard_repo.dart';
 import 'package:ecommerce_dashboard/models/orders.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

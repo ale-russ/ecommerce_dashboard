@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'controller/home_page_controller.dart';
+import '../controller/home_page_controller.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key, this.child}) : super(key: key);
