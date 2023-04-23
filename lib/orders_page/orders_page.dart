@@ -70,7 +70,7 @@ class _OrderpageState extends ConsumerState<Orderpage> {
                     const SizedBox(
                       height: defaultPadding * 2,
                     ),
-                    const Tableorders(
+                    Tableorders(
                       cell1: 'orderId',
                       cell2: 'orderDate',
                       cell3: 'status',

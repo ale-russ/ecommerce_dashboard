@@ -11,7 +11,10 @@ class ProductDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(product!.name!),
+        centerTitle: true,
+      ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -1,17 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 
 class Tableorders extends StatelessWidget {
-  const Tableorders(
-      {super.key, this.cell1, this.cell2, this.cell3, this.cell4});
+  Tableorders({super.key, this.cell1, this.cell2, this.cell3, this.cell4});
   final String? cell1;
   final String? cell2;
   final String? cell3;
   final String? cell4;
 
+  Color? statusColor = Colors.white;
+
   @override
   Widget build(BuildContext context) {
+    if (cell3 == 'packing') {
+      statusColor = Colors.amber;
+    } else if (cell3 == 'delivered') {
+      statusColor = Colors.blue;
+    } else if (cell3 == 'completed') {
+      statusColor = Colors.green;
+    }
     return Container(
       color: secondaryColor,
       child: Table(
@@ -58,8 +68,8 @@ class Tableorders extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(cell3!,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: statusColor!,
                         )),
                   ),
                 ),
