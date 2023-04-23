@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/constants.dart';
+import '../../constants/custome_appbar.dart';
 import '../controller/login_controller.dart';
 import 'login_page.dart';
 
@@ -28,11 +29,10 @@ class RegistrationPage extends ConsumerWidget {
     final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       backgroundColor: bgColor,
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        centerTitle: true,
-        backgroundColor: secondaryColor,
-        title: const Text('Register'),
+      appBar: const CustomAppBar(
+        title: 'Register',
+        isCenterTile: true,
+        fontSize: 20,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

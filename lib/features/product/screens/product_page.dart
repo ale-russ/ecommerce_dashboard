@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common_widget/error_widget.dart';
+import '../../constants/custome_appbar.dart';
 import '../widget/product_widget.dart';
 
 class ProductPage extends ConsumerWidget {
@@ -16,20 +17,9 @@ class ProductPage extends ConsumerWidget {
     final products = ref.watch(productsprovider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: secondaryColor,
-        title: const Text('Products'),
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                '${users.email}',
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-          )
-        ],
+      appBar: CustomAppBar(
+        users: users,
+        title: 'Products',
       ),
       body: products.when(
         data: (data) {

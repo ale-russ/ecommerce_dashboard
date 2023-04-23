@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../constants/custome_appbar.dart';
 import '../../models/product.dart';
 
 class ProductDetailsPage extends ConsumerWidget {
@@ -11,10 +12,14 @@ class ProductDetailsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(product!.name!),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        title: product!.name,
+        isCenterTile: true,
       ),
+      // appBar: AppBar(
+      //   title: Text(product!.name!),
+      //   centerTitle: true,
+      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

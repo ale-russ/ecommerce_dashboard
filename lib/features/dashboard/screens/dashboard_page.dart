@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../common_widget/error_widget.dart';
+import '../../constants/custome_appbar.dart';
 
 class Dashboardpage extends ConsumerStatefulWidget {
   const Dashboardpage({super.key});
@@ -24,21 +25,7 @@ class _DashboardpageState extends ConsumerState<Dashboardpage> {
     final completed = ref.watch(completedprovider);
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: secondaryColor,
-          title: const Text('Dashboard'),
-          actions: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  '${users.email}',
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ),
-            )
-          ],
-        ),
+        appBar: CustomAppBar(users: users, title: 'Dashboard'),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(

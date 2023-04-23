@@ -10,6 +10,7 @@ import 'package:ecommerce_dashboard/features/authenticate/screens/registration.d
 import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
+import '../../constants/custome_appbar.dart';
 import '../controller/login_controller.dart';
 import '../providers/auth_state_change_provider.dart';
 import '../widgets/email_password_field.dart';
@@ -46,11 +47,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(22, 16, 75, 0.6),
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: secondaryColor,
-        title: const Text('Login'),
+      appBar: const CustomAppBar(
+        title: 'Login',
+        isCenterTile: true,
+        fontSize: 20,
       ),
       body: Container(
         color: bgColor,

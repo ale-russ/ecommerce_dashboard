@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+import '../../constants/custome_appbar.dart';
 import '../../notifications/notification_message.dart';
 import '../provider/upload_info_provider.dart';
 
@@ -49,24 +50,25 @@ class _AddproductState extends ConsumerState<AddProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: secondaryColor,
-        title: const Text(
-          'Add product',
-          style: TextStyle(fontSize: 14),
-        ),
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                '${users.email}',
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
-          )
-        ],
-      ),
+      appBar: CustomAppBar(users: users, title: 'Add Products', fontSize: 14),
+      // AppBar(
+      //   backgroundColor: secondaryColor,
+      //   title: const Text(
+      //     'Add product',
+      //     style: TextStyle(fontSize: 14),
+      //   ),
+      //   actions: [
+      //     Center(
+      //       child: Padding(
+      //         padding: const EdgeInsets.symmetric(horizontal: 8),
+      //         child: Text(
+      //           '${users.email}',
+      //           style: const TextStyle(fontSize: 12),
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
