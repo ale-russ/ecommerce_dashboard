@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../authenticate/providers/auth_state_change_provider.dart';
-import '../authenticate/screens/auth_page.dart';
-import '../authenticate/screens/login_page.dart';
-import '../authenticate/screens/registration.dart';
-import '../dashboard/screens/dashboard_page.dart';
-import '../home/screen/home_page.dart';
-import '../models/product.dart';
-import '../orders/screen/orders_page.dart';
-import '../product/screens/product_page.dart';
-import '../product/screens/products_detali.dart';
-import '../product/screens/add_product.dart';
-import '../account/screens/account_page.dart';
+import '../features/authenticate/providers/auth_state_change_provider.dart';
+import '../features/authenticate/screens/auth_page.dart';
+import '../features/authenticate/screens/login_page.dart';
+import '../features/authenticate/screens/registration.dart';
+import '../features/dashboard/screens/dashboard_page.dart';
+import '../features/home/screen/home_page.dart';
+import '../features/models/product.dart';
+import '../features/orders/screen/orders_page.dart';
+import '../features/product/screens/product_page.dart';
+import '../features/product/screens/products_detali.dart';
+import '../features/product/screens/add_product.dart';
+import '../features/account/screens/account_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
@@ -83,7 +83,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                   path: '/orders',
                   name: 'orders',
                   builder: (context, state) {
-                    return const Orderpage();
+                    return const OrderPage();
                   }),
               GoRoute(
                   parentNavigatorKey: _shellNavigator,
