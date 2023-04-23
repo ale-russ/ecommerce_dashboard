@@ -44,7 +44,7 @@ class FirebaseServices {
     }
   }
 
-  Future<void> googleSigninButton() async {
+  Future<bool> googleSigninButton() async {
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -58,8 +58,10 @@ class FirebaseServices {
 
       final User user = userCredential.user!;
       log('user: ${user.displayName}');
+      return true;
     } catch (err) {
       log('Error: $err');
+      return false;
     }
   }
 
@@ -81,8 +83,14 @@ class FirebaseServices {
     await userRef.set(userData);
   }
 
-  Future<void> signOut() async {
-    await _auth.signOut();
+  Future<bool> signOut() async {
+    try {
+      await _auth.signOut();
+      return true;
+    } on Exception catch (err) {
+      log('error: $err');
+      return false;
+    }
   }
 
   void displayFirebaseError(FirebaseAuthException e, BuildContext context) {
