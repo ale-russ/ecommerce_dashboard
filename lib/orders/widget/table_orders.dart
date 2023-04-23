@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../constants/constants.dart';
+import '../../constants/constants.dart';
 
 class Tableorders extends StatelessWidget {
   Tableorders({super.key, this.cell1, this.cell2, this.cell3, this.cell4});

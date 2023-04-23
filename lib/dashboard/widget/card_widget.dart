@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 
 import '../../constants/constants.dart';
-import '../../product_page/widget/product_widget.dart';
+import '../../product/widget/product_widget.dart';
 
 class Dashboardwidget extends StatelessWidget {
   const Dashboardwidget(

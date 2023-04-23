@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:ecommerce_dashboard/authenticate/providers/isObuscre_provider.dart';
 import 'package:ecommerce_dashboard/authenticate/widgets/email_password_field.dart';
-import 'package:ecommerce_dashboard/home_page/home_page.dart';
+import 'package:ecommerce_dashboard/home/screen/home_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

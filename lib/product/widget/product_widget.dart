@@ -3,9 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../../models/product.dart';
-import '../../widget/image_widget.dart';
+import '../../common_widget/image_widget.dart';
 import '../screens/products_detali.dart';
-import 'add_product.dart';
+import '../screens/add_product.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({

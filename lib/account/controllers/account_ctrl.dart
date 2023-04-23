@@ -1,7 +1,7 @@
 import 'package:ecommerce_dashboard/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'account_repo.dart';
+import '../services/account_repo.dart';
 
 class Accountcontrollers {
   Accountcontrollers({required this.ref});

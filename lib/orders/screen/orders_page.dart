@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/constants/constants.dart';
-import 'package:ecommerce_dashboard/orders_page/orders_ctrl.dart';
+import 'package:ecommerce_dashboard/orders/controllers/orders_ctrl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widget/admin_appbar.dart';
-import '../widget/error_widget.dart';
+import '../../common_widget/admin_appbar.dart';
+import '../../common_widget/error_widget.dart';
 import '../widget/table_orders.dart';
 
 class Orderpage extends ConsumerStatefulWidget {
