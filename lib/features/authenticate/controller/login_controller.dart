@@ -8,17 +8,20 @@ class LoginControllerNotifier extends StateNotifier<LoadStatus> {
 
   final Ref ref;
 
-  Future<bool> login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     state = LoadStatus.loading;
+    String serverMessage = '';
 
-    try {
-      await ref.read(authProvider).signInWithEmailPassword(email, password);
-      return true;
-      // state = LoadStatus.loaded;
-    } catch (e) {
-      state = LoadStatus.error;
-    }
-    return false;
+    // try {
+    serverMessage =
+        await ref.read(authProvider).signInWithEmailPassword(email, password);
+    return serverMessage;
+    // state = LoadStatus.loaded;
+    // } catch (err) {
+    //   state = LoadStatus.error;
+    //   serverMessage = err.toString();
+    // }
+    // return serverMessage;
   }
 
   Future<bool> signUp(String email, String password) async {
@@ -33,13 +36,13 @@ class LoginControllerNotifier extends StateNotifier<LoadStatus> {
     return false;
   }
 
-  void signOut() async {
-    await ref.read(authProvider).signOut().then((value) {
-      ref.read(loggedIn.notifier).setLogin(false);
-    });
+  void signOut() {
+    ref.read(authProvider).signOut();
+    ref.watch(authProvider).googleSignIn.signOut();
+    ref.read(loggedIn.notifier).setLogin(false);
   }
 
-  void googleSignIn() async {
+  Future<void> googleSignIn() async {
     await ref.read(authProvider).googleSigninButton().then((value) {
       ref.read(loggedIn.notifier).setLogin(true);
     });

@@ -11,7 +11,10 @@ final authProvider = Provider<FirebaseServices>(
   },
 );
 
-final authStateProvider = StreamProvider.autoDispose<User?>((ref) {
+// final authStateProvider = StreamProvider.autoDispose<User?>((ref) {
+//   return ref.read(authProvider).authStateChange;
+// });
+final authStateProvider = StreamProvider<User?>((ref) {
   return ref.read(authProvider).authStateChange;
 });
 

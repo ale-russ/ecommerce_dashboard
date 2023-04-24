@@ -10,37 +10,41 @@ class FirebaseServices {
   final FirebaseAuth _auth;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  // Stream<User?> get authStateChange => _auth.idTokenChanges();
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  Future<bool> signInWithEmailPassword(String email, String password) async {
+  Future<String> signInWithEmailPassword(String email, String password) async {
+    String serverMessage = ' ';
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       User user = userCredential.user!;
-      return true;
+      saveUserToFirestore(user);
+      serverMessage = 'Success';
+      return serverMessage;
     } on FirebaseAuthException catch (e) {
-      // if (e.code == 'user-not-found') {
-      //   log('No user found for that email.');
-      // } else if (e.code == 'wrong-password') {
-      //   log('Wrong password provided for that user.');
-      // }
-      // log('error: ${e.toString()}');
+      if (e.code == 'user-not-found') {
+        serverMessage = 'User not found';
+        log('User not found.');
+      } else if (e.code == 'wrong-password') {
+        log('Wrong password provided for that user.');
+        serverMessage = 'Wrong password';
+      }
     }
-    return false;
+    return serverMessage;
   }
 
   Future<void> createUserButton(String email, String password) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      // displayFirebaseError(e);
-    } catch (e) {
-      // Handle other errors.
-      // displayFirebaseError(e, context)
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      User user = userCredential.user!;
+      saveUserToFirestore(user);
+    } on FirebaseAuthException catch (err) {
+      log('error: $err');
+    } catch (err) {
+      log('error: $err');
     }
   }
 
@@ -57,6 +61,7 @@ class FirebaseServices {
           await _auth.signInWithCredential(credential);
 
       final User user = userCredential.user!;
+      saveUserToFirestore(user);
       log('user: ${user.displayName}');
       return true;
     } catch (err) {
@@ -66,6 +71,8 @@ class FirebaseServices {
   }
 
   Future<void> saveUserToFirestore(User user) async {
+    log('user-email: ${user.email}');
+
     final userRef =
         FirebaseFirestore.instance.collection('users').doc(user.uid);
 

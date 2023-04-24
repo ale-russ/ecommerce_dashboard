@@ -22,24 +22,27 @@ final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
 
 final routerProvider = Provider<GoRouter>((ref) {
-  var isLoggedIn = ref.watch(loggedIn);
+  final isAuthed = ref.watch(authStateProvider);
+
+  isAuthed.hasValue;
 
   return GoRouter(
       navigatorKey: _rootNavigator,
       initialLocation: '/',
       redirect: (context, state) {
-        final isLoggingIn = state.subloc == '/login';
         final isRegistering = state.subloc == '/register';
+        final isLoggingIn = state.subloc == '/login';
+        final status = isAuthed.value != null;
 
-        log('isLoggedIn: $isLoggedIn');
+        log('isAuthed: $status');
 
-        if (!isLoggedIn && !isLoggingIn && !isRegistering) {
+        if (isAuthed.value == null && !isLoggingIn && !isRegistering) {
           return '/login';
         }
-        if (!isLoggedIn && !isLoggingIn && isRegistering) {
+        if (isAuthed.value == null && !isLoggingIn && isRegistering) {
           return '/register';
         }
-        if (isLoggedIn && isLoggingIn || isRegistering) {
+        if (isAuthed.value != null && isLoggingIn && !isRegistering) {
           return '/';
         }
 
@@ -72,21 +75,21 @@ final routerProvider = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(
-                  parentNavigatorKey: _shellNavigator,
+                  // parentNavigatorKey: _shellNavigator,
                   path: '/',
                   name: 'dashboard',
                   builder: (context, state) {
                     return const Dashboardpage();
                   }),
               GoRoute(
-                  parentNavigatorKey: _shellNavigator,
+                  // parentNavigatorKey: _shellNavigator,
                   path: '/orders',
                   name: 'orders',
                   builder: (context, state) {
                     return const OrderPage();
                   }),
               GoRoute(
-                  parentNavigatorKey: _shellNavigator,
+                  // parentNavigatorKey: _shellNavigator,
                   path: '/products',
                   name: 'products',
                   builder: (context, state) {
@@ -113,7 +116,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                     )
                   ]),
               GoRoute(
-                parentNavigatorKey: _shellNavigator,
+                // parentNavigatorKey: _shellNavigator,
                 path: '/profile',
                 name: 'profile',
                 builder: (context, state) {

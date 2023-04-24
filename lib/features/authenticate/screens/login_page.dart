@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/custome_appbar.dart';
+import '../../constants/load_status.dart';
 import '../controller/login_controller.dart';
 import '../providers/auth_state_change_provider.dart';
 import '../widgets/email_password_field.dart';
@@ -94,17 +96,8 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 margin: const EdgeInsets.only(top: 16),
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    var isValid = _formKey.currentState?.validate() ?? false;
-                    if (isValid) {
-                      ref
-                          .read(loginControllerProvider.notifier)
-                          .login(emailController.text, passwordController.text)
-                          .then((value) {
-                        ref.read(loggedIn.notifier).setLogin(value);
-                      });
-                    }
-                  },
+                  onPressed: () =>
+                      login(emailController.text, passwordController.text),
                   child: const Text('Sign In'),
                 ),
               ),
@@ -128,8 +121,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50)),
                 child: IconButton(
-                  onPressed: () {
-                    ref.read(loginControllerProvider.notifier).googleSignIn();
+                  onPressed: () async {
+                    await ref
+                        .read(loginControllerProvider.notifier)
+                        .googleSignIn();
                   },
                   icon: SvgPicture.asset(
                     'assets/icon_google.svg',
@@ -142,5 +137,37 @@ class LoginPageState extends ConsumerState<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> login(String email, String password) async {
+    var isValid = _formKey.currentState?.validate() ?? false;
+    var scaffoldMessenger = ScaffoldMessenger.of(context);
+    if (isValid) {
+      try {
+        var response = await ref
+            .read(loginControllerProvider.notifier)
+            .login(email, password);
+
+        if (response == 'Success') {
+          ref.read(loggedIn.notifier).setLogin(true);
+        } else {
+          scaffoldMessenger.showSnackBar(SnackBar(
+              content: Text(
+            response,
+            style: const TextStyle(color: Colors.red),
+          )));
+        }
+      } on Exception catch (err) {
+        log('error: $err');
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              'Error: $err',
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
+        );
+      }
+    }
   }
 }
