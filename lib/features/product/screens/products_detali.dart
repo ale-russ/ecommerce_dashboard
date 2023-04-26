@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constants/custome_appbar.dart';
 import '../../models/product.dart';
@@ -16,27 +17,30 @@ class ProductDetailsPage extends ConsumerWidget {
         title: product!.name,
         isCenterTile: true,
       ),
-      // appBar: AppBar(
-      //   title: Text(product!.name!),
-      //   centerTitle: true,
-      // ),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-          Container(
-            height: 200,
-            width: 350,
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.withOpacity(0.1)),
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                    image: NetworkImage(
-                      product!.imageURL!,
-                    ),
-                    fit: BoxFit.cover)),
+          InkWell(
+            onTap: () {
+              context.goNamed(
+                'trailer-products',
+              );
+            },
+            child: Container(
+              height: 200,
+              width: 350,
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.withOpacity(0.1)),
+                  borderRadius: BorderRadius.circular(8),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        product!.imageURL!,
+                      ),
+                      fit: BoxFit.cover)),
+            ),
           ),
           Container(
             margin: const EdgeInsets.only(top: 10),

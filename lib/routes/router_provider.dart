@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ecommerce_dashboard/features/product/player/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,6 +113,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                           key: state.pageKey,
                           product: prods,
                         );
+                      },
+                    ),
+                    GoRoute(
+                      path: 'trailer-products',
+                      name: 'trailer-products',
+                      builder: (context, state) {
+                        return const videoplayer();
                       },
                     )
                   ]),
