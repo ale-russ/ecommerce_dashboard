@@ -1,18 +1,13 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:ecommerce_dashboard/features/authenticate/providers/isObuscre_provider.dart';
-import 'package:ecommerce_dashboard/features/authenticate/screens/registration.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/custome_appbar.dart';
-import '../../constants/load_status.dart';
 import '../controller/login_controller.dart';
 import '../providers/auth_state_change_provider.dart';
 import '../widgets/email_password_field.dart';
@@ -102,6 +97,16 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     isValid = _formKey.currentState?.validate() ?? false;
                     var scaffoldMessenger = ScaffoldMessenger.of(context);
 
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ));
+                      },
+                    );
+
                     String? response = '';
                     if (isValid) {
                       response = await ref
@@ -147,6 +152,15 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(50)),
                 child: IconButton(
                   onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ));
+                      },
+                    );
                     await ref
                         .read(loginControllerProvider.notifier)
                         .googleSignIn();

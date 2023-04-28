@@ -77,15 +77,16 @@ class RegistrationPage extends ConsumerWidget {
                 width: 300,
                 child: ElevatedButton(
                   onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    );
                     var isValid = _formKey.currentState?.validate() ?? false;
                     if (isValid) {
                       await ref.read(loginControllerProvider.notifier).signUp(
                           emailController.text, passwordController.text);
-                      // .then((value) => Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => HomePage(),
-                      //     )));
                     }
                   },
                   child: const Text('Create new'),
