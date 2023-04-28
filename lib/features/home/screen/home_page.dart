@@ -34,6 +34,7 @@ class BottomNavigationWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    log('selectedIndex: $selectedIndex');
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: (value) => _onTap(context, value, ref),

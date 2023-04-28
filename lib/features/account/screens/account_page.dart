@@ -23,10 +23,10 @@ class _AccountPageState extends ConsumerState<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final String email = users.email.toString();
-    final questionDb =
+    final userData =
         FirebaseFirestore.instance.collection('users').doc(email).snapshots();
     return StreamBuilder<DocumentSnapshot>(
-      stream: questionDb,
+      stream: userData,
       builder: (context, snapshot) {
         return !snapshot.hasData
             ? const LoadingWidget()
@@ -61,14 +61,13 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          hint: users.displayName?.split(' ')[0],
+                          hint: users.displayName?.split(' ')[0] ?? "",
                         ),
                         const SizedBox(height: defaultPadding),
                         KpTextField(
                           readonly: true,
                           maxlines: 1,
-                          // hint: users.displayName?.split(' ')[1],
-                          hint: users.displayName?.split(' ')[0],
+                          hint: users.displayName?.split(' ')[1] ?? "",
                         ),
                         const SizedBox(height: defaultPadding * 2),
                         SizedBox(

@@ -11,9 +11,6 @@ final authProvider = Provider<FirebaseServices>(
   },
 );
 
-// final authStateProvider = StreamProvider.autoDispose<User?>((ref) {
-//   return ref.read(authProvider).authStateChange;
-// });
 final authStateProvider = StreamProvider<User?>((ref) {
   return ref.read(authProvider).authStateChange;
 });
@@ -23,13 +20,4 @@ final loggedIn =
 
 class LoginNotifier extends StateNotifier<bool> {
   LoginNotifier(state) : super(state);
-  // @override
-  // build() {
-  //   log('State: $state');
-  //   return state;
-  // }
-
-  void setLogin(bool isLoggedIn) {
-    state = isLoggedIn;
-  }
 }

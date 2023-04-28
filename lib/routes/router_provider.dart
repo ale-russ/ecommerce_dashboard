@@ -115,13 +115,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                         );
                       },
                     ),
-                    GoRoute(
-                      path: 'trailer-products',
-                      name: 'trailer-products',
-                      builder: (context, state) {
-                        return const videoplayer();
-                      },
-                    )
+                    // GoRoute(
+                    //   path: 'trailer-products',
+                    //   name: 'trailer-products',
+                    //   builder: (context, state) {
+                    //     return VideoPlayer();
+                    //   },
+                    // )
                   ]),
               GoRoute(
                 // parentNavigatorKey: _shellNavigator,
@@ -131,6 +131,14 @@ final routerProvider = Provider<GoRouter>((ref) {
                   return const AccountPage();
                 },
               ),
-            ])
+            ]),
+        GoRoute(
+          parentNavigatorKey: _rootNavigator,
+          path: '/trailer-products',
+          name: 'trailer-products',
+          builder: (context, state) {
+            return const VideoPlayer();
+          },
+        )
       ]);
 });

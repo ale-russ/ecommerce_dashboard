@@ -30,22 +30,24 @@ class LoginPageState extends ConsumerState<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool isValid = false;
+
   @override
   Widget build(BuildContext context) {
     var isObscured = ref.watch(isObscureProvider);
 
-    // ref.listen<LoadStatus>(loginControllerProvider, (previous, state) {
-    //   log('state: $state');
-    //   if (state == LoadStatus.error) {
-    //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //       content: const Text('Something went wrong...'),
-    //     ));
-    //   } else if (state == LoadStatus.loading) {
-    //     const CircularProgressIndicator(
-    //       color: Colors.amber,
-    //     );
-    //   }
-    // });
+    ref.listen<AsyncValue<void>>(loginControllerProvider, (previous, state) {
+      log('state listner: ${state.asData!.isLoading}');
+      if (state.error == true) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Something went wrong...'),
+        ));
+      } else if (state.isLoading) {
+        const CircularProgressIndicator(
+          color: Colors.amber,
+        );
+      }
+    });
 
     return Scaffold(
       backgroundColor: const Color.fromRGBO(22, 16, 75, 0.6),
@@ -66,9 +68,9 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 hint: 'email',
                 controller: emailController,
                 validator: (email) {
-                  var isValid = EmailValidator.validate(email!);
+                  isValid = EmailValidator.validate(email!);
                   if (isValid) return null;
-                  return 'invalid email';
+                  return 'Invalid email';
                 },
               ),
               EmailPasswordFields(
@@ -77,7 +79,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 hint: 'password',
                 validator: (String? password) {
                   if (password == null || password.isEmpty) {
-                    return 'enter valid password';
+                    return 'Enter valid password';
                   }
                   return null;
                 },
@@ -96,8 +98,33 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 margin: const EdgeInsets.only(top: 16),
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () =>
-                      login(emailController.text, passwordController.text),
+                  onPressed: () async {
+                    isValid = _formKey.currentState?.validate() ?? false;
+                    var scaffoldMessenger = ScaffoldMessenger.of(context);
+
+                    String? response = '';
+                    if (isValid) {
+                      response = await ref
+                          .read(loginControllerProvider.notifier)
+                          .login(emailController.text, passwordController.text);
+                    }
+
+                    log('response: $response');
+
+                    if (response != "Success" && response.isNotEmpty) {
+                      scaffoldMessenger.showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Error: $response',
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: const Text('Sign In'),
                 ),
               ),
@@ -137,37 +164,5 @@ class LoginPageState extends ConsumerState<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<void> login(String email, String password) async {
-    var isValid = _formKey.currentState?.validate() ?? false;
-    var scaffoldMessenger = ScaffoldMessenger.of(context);
-    if (isValid) {
-      try {
-        var response = await ref
-            .read(loginControllerProvider.notifier)
-            .login(email, password);
-
-        if (response == 'Success') {
-          ref.read(loggedIn.notifier).setLogin(true);
-        } else {
-          scaffoldMessenger.showSnackBar(SnackBar(
-              content: Text(
-            response,
-            style: const TextStyle(color: Colors.red),
-          )));
-        }
-      } on Exception catch (err) {
-        log('error: $err');
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(
-              'Error: $err',
-              style: const TextStyle(color: Colors.red),
-            ),
-          ),
-        );
-      }
-    }
   }
 }

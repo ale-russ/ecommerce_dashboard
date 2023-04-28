@@ -25,21 +25,37 @@ class ProductDetailsPage extends ConsumerWidget {
           SizedBox(height: MediaQuery.of(context).size.height * 0.2),
           InkWell(
             onTap: () {
-              context.goNamed(
+              context.pushNamed(
                 'trailer-products',
               );
             },
-            child: Container(
-              height: 200,
-              width: 350,
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.withOpacity(0.1)),
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        product!.imageURL!,
-                      ),
-                      fit: BoxFit.cover)),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: 200,
+                  width: 350,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey.withOpacity(0.1)),
+                      borderRadius: BorderRadius.circular(8),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                            product!.imageURL!,
+                          ),
+                          fit: BoxFit.cover)),
+                ),
+                IconButton(
+                    onPressed: () {
+                      context.pushNamed(
+                        'trailer-products',
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.play_circle,
+                      size: 40,
+                      color: Colors.amber,
+                    ))
+              ],
             ),
           ),
           Container(
