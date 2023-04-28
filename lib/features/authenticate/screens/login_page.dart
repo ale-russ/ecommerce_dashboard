@@ -97,6 +97,16 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     isValid = _formKey.currentState?.validate() ?? false;
                     var scaffoldMessenger = ScaffoldMessenger.of(context);
 
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ));
+                      },
+                    );
+
                     String? response = '';
                     if (isValid) {
                       response = await ref
@@ -119,13 +129,6 @@ class LoginPageState extends ConsumerState<LoginPage> {
                         ),
                       );
                     }
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Center(child: CircularProgressIndicator());
-                      },
-                    );
-                    // login(emailController.text, passwordController.text);
                   },
                   child: const Text('Sign In'),
                 ),
@@ -154,7 +157,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.amber,
+                        ));
                       },
                     );
                     await ref
