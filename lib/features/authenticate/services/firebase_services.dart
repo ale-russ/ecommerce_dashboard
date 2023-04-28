@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../providers/auth_state_change_provider.dart';
 
 class FirebaseServices {
   FirebaseServices(this._auth);
@@ -49,6 +52,8 @@ class FirebaseServices {
   }
 
   Future<bool> googleSigninButton() async {
+    final Ref ref;
+
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -66,6 +71,7 @@ class FirebaseServices {
       return true;
     } catch (err) {
       log('Error: $err');
+
       return false;
     }
   }

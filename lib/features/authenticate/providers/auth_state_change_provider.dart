@@ -21,3 +21,11 @@ final loggedIn =
 class LoginNotifier extends StateNotifier<bool> {
   LoginNotifier(state) : super(state);
 }
+
+class LoadingNotifier extends StateNotifier<bool> {
+  LoadingNotifier(state) : super(state);
+
+  void setLoading(bool isLoading) {
+    state = isLoading;
+  }
+}
