@@ -33,3 +33,11 @@ class LoginNotifier extends StateNotifier<bool> {
     state = isLoggedIn;
   }
 }
+
+class LoadingNotifier extends StateNotifier<bool> {
+  LoadingNotifier(state) : super(state);
+
+  void setLoading(bool isLoading) {
+    state = isLoading;
+  }
+}

@@ -1,18 +1,13 @@
 import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:ecommerce_dashboard/features/authenticate/providers/isObuscre_provider.dart';
-import 'package:ecommerce_dashboard/features/authenticate/screens/registration.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../constants/constants.dart';
 import '../../constants/custome_appbar.dart';
-import '../../constants/load_status.dart';
 import '../controller/login_controller.dart';
 import '../providers/auth_state_change_provider.dart';
 import '../widgets/email_password_field.dart';
@@ -96,8 +91,15 @@ class LoginPageState extends ConsumerState<LoginPage> {
                 margin: const EdgeInsets.only(top: 16),
                 width: 300,
                 child: ElevatedButton(
-                  onPressed: () =>
-                      login(emailController.text, passwordController.text),
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    );
+                    login(emailController.text, passwordController.text);
+                  },
                   child: const Text('Sign In'),
                 ),
               ),
@@ -122,6 +124,12 @@ class LoginPageState extends ConsumerState<LoginPage> {
                     borderRadius: BorderRadius.circular(50)),
                 child: IconButton(
                   onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    );
                     await ref
                         .read(loginControllerProvider.notifier)
                         .googleSignIn();
@@ -140,8 +148,12 @@ class LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> login(String email, String password) async {
+    bool isLoading = false;
     var isValid = _formKey.currentState?.validate() ?? false;
     var scaffoldMessenger = ScaffoldMessenger.of(context);
+    setState(() {
+      isLoading = true;
+    });
     if (isValid) {
       try {
         var response = await ref
@@ -159,6 +171,9 @@ class LoginPageState extends ConsumerState<LoginPage> {
         }
       } on Exception catch (err) {
         log('error: $err');
+        setState(() {
+          isLoading = false;
+        });
         scaffoldMessenger.showSnackBar(
           SnackBar(
             content: Text(
