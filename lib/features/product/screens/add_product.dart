@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_dashboard/features/constants/constants.dart';
@@ -26,7 +27,7 @@ class _AddproductState extends ConsumerState<AddProductPage> {
   final TextEditingController name = TextEditingController();
   final TextEditingController price = TextEditingController();
   File? _imageFile;
-  String? _imageUrl;
+  // String? _imageUrl;
   final User users = FirebaseAuth.instance.currentUser!;
 
   Future<void> _getImage(ImageSource source) async {
@@ -49,124 +50,124 @@ class _AddproductState extends ConsumerState<AddProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    var uploaStatus = ref.watch(uploadStatusProvider);
+    log('uploadStatus: $uploaStatus');
+
+    bool isLoding = false;
+
+    ref.listen(uploadStatusProvider, (previous, status) {
+      if (status.isLoading) isLoding = true;
+    });
+
     return Scaffold(
       appBar: CustomAppBar(users: users, title: 'Add Products', fontSize: 14),
-      // AppBar(
-      //   backgroundColor: secondaryColor,
-      //   title: const Text(
-      //     'Add product',
-      //     style: TextStyle(fontSize: 14),
-      //   ),
-      //   actions: [
-      //     Center(
-      //       child: Padding(
-      //         padding: const EdgeInsets.symmetric(horizontal: 8),
-      //         child: Text(
-      //           '${users.email}',
-      //           style: const TextStyle(fontSize: 12),
-      //         ),
-      //       ),
-      //     )
-      //   ],
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _imageFile != null
-                  ? Image.file(_imageFile!,
-                      height: 200, width: 400, fit: BoxFit.cover)
-                  : Container(
-                      height: 200,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1,
-                        ),
-                      ),
-                      child: _imageFile == null
-                          ? const Center(
-                              child: Text('No image selected.',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black)),
-                            )
-                          : Image.file(
-                              _imageFile!,
-                              fit: BoxFit.cover,
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _imageFile != null
+                      ? Image.file(_imageFile!,
+                          height: 200, width: 400, fit: BoxFit.cover)
+                      : Container(
+                          height: 200,
+                          width: 400,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
                             ),
-                    ),
-              const SizedBox(height: 16),
-              Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                    height: 20,
-                    width: 120,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          side: const BorderSide(color: primaryColor, width: 2),
+                          ),
+                          child: _imageFile == null
+                              ? const Center(
+                                  child: Text('No image selected.',
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.black)),
+                                )
+                              : Image.file(
+                                  _imageFile!,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
-                        onPressed: () => _getImage(ImageSource.gallery),
-                        child: const Text('Select image',
-                            style:
-                                TextStyle(fontSize: 12, color: Colors.black)))),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: name,
-                style: const TextStyle(color: Colors.white),
-                minLines: 1,
-                maxLines: 15,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'name description',
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: price,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter price',
-                ),
-              ),
-              const SizedBox(height: 16),
-              const SizedBox(height: 16),
-              Center(
-                child: SizedBox(
-                  width: 300,
-                  child: ElevatedButton(
-                    // onPressed: _uploadImage,
-                    onPressed: () async {
-                      var scaffoldMessenger = ScaffoldMessenger.of(context);
-                      var status = await ref
-                          .read(uploadInfoProvider.notifier)
-                          .uploadImage(
-                              context, name.text, price.text, _imageFile);
-                      if (status) {
-                        scaffoldMessenger.showSnackBar(const SnackBar(
-                            content: Text(
-                          'Uploaded Successfully',
-                          style: TextStyle(color: Colors.green),
-                        )));
-                      }
-                      scaffoldMessenger.showSnackBar(const SnackBar(
-                          content: Text(
-                        'Opps... Something went wrong. Please try again',
-                        style: TextStyle(color: Colors.red),
-                      )));
-                    },
-                    child: const Text('Add product'),
+                  const SizedBox(height: 16),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: SizedBox(
+                        height: 20,
+                        width: 120,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: primaryColor,
+                              side: const BorderSide(
+                                  color: primaryColor, width: 2),
+                            ),
+                            onPressed: () => _getImage(ImageSource.gallery),
+                            child: const Text('Select image',
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.black)))),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: name,
+                    style: const TextStyle(color: Colors.white),
+                    minLines: 1,
+                    maxLines: 15,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'name description',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: price,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter price',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Center(
+                    child: SizedBox(
+                      width: 300,
+                      child: ElevatedButton(
+                        // onPressed: _uploadImage,
+                        onPressed: () async {
+                          var scaffoldMessenger = ScaffoldMessenger.of(context);
+                          var status = await ref
+                              .read(uploadInfoProvider.notifier)
+                              .uploadImage(
+                                  context, name.text, price.text, _imageFile);
+                          if (status) {
+                            scaffoldMessenger.showSnackBar(const SnackBar(
+                                content: Text(
+                              'Uploaded Successfully',
+                              style: TextStyle(color: Colors.green),
+                            )));
+                          } else {
+                            scaffoldMessenger.showSnackBar(const SnackBar(
+                                content: Text(
+                              'Opps... Something went wrong. Please try again',
+                              style: TextStyle(color: Colors.red),
+                            )));
+                          }
+                        },
+                        child: const Text('Add product'),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          if (isLoding)
+            const CircularProgressIndicator(
+              color: Colors.amber,
+            ),
+        ],
       ),
     );
   }

@@ -4,8 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../constants/constants.dart';
 import '../../models/product.dart';
 import '../../common_widget/image_widget.dart';
-import '../screens/products_detali.dart';
-import '../screens/add_product.dart';
 
 class ProductWidget extends StatelessWidget {
   const ProductWidget({
@@ -85,6 +83,7 @@ class DescText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var prodName = name[0].toUpperCase() + name.substring(1);
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Row(
@@ -101,7 +100,7 @@ class DescText extends StatelessWidget {
             ),
           Expanded(
             child: Text(
-              name,
+              prodName,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,

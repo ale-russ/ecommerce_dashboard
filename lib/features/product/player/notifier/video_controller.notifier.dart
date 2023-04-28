@@ -8,6 +8,9 @@ class VideoPlayerControllerNotifier
     extends AutoDisposeAsyncNotifier<VideoPlayerController?> {
   @override
   build() {
+    ref.onDispose(() {
+      state.asData?.value!.dispose();
+    });
     return initialize();
   }
 

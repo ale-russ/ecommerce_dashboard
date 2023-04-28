@@ -12,9 +12,11 @@ class ProductDetailsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var productName =
+        product!.name![0].toUpperCase() + product!.name!.substring(1);
     return Scaffold(
       appBar: CustomAppBar(
-        title: product!.name,
+        title: productName,
         isCenterTile: true,
       ),
       body: Center(

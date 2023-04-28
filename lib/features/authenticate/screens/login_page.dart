@@ -108,9 +108,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
                           .read(loginControllerProvider.notifier)
                           .login(emailController.text, passwordController.text);
                     }
-
                     log('response: $response');
-
                     if (response != "Success" && response.isNotEmpty) {
                       scaffoldMessenger.showSnackBar(
                         SnackBar(

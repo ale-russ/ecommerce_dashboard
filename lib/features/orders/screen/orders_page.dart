@@ -39,10 +39,10 @@ class _OrderPageState extends ConsumerState<OrderPage> {
                       height: defaultPadding * 2,
                     ),
                     Tableorders(
-                      cell1: 'orderId',
-                      cell2: 'orderDate',
-                      cell3: 'status',
-                      cell4: 'price',
+                      cell1: 'OrderId',
+                      cell2: 'OrderDate',
+                      cell3: 'Status',
+                      cell4: 'Price',
                     ),
                     const SizedBox(height: defaultPadding),
                     SizedBox(
@@ -56,9 +56,8 @@ class _OrderPageState extends ConsumerState<OrderPage> {
                           return Tableorders(
                             cell1: data[index].orderId,
                             cell2: data[index].orderDate,
-                            // cell3: data[index].status,
                             cell3: status,
-                            cell4: data[index].totalPrice,
+                            cell4: '${data[index].totalPrice} \$',
                           );
                         },
                         separatorBuilder: (context, index) =>
