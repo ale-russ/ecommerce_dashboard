@@ -137,6 +137,15 @@ class _AddproductState extends ConsumerState<AddProductPage> {
                         // onPressed: _uploadImage,
                         onPressed: () async {
                           var scaffoldMessenger = ScaffoldMessenger.of(context);
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.amber,
+                              ));
+                            },
+                          );
                           var status = await ref
                               .read(uploadInfoProvider.notifier)
                               .uploadImage(
